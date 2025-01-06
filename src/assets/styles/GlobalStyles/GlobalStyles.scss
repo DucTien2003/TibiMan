@@ -1,0 +1,192 @@
+@use "../theme.scss" as *;
+@use "../variables.scss" as *;
+@use "../animations.scss" as *;
+@use "../customMaterialUI.scss" as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+
+  *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--scrollbar-color);
+  }
+
+  *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+body {
+  font-family: "Roboto", "Poppins", Arial, sans-serif;
+  color: var(--back-theme-10);
+  font-size: 1rem;
+  line-height: 1.3;
+  text-rendering: optimizeSpeed;
+}
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: currentColor;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  display: block;
+}
+
+ul,
+li {
+  display: block;
+  list-style: none;
+
+  &,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  border: none;
+  outline: none;
+}
+
+h1 {
+  font-size: 2rem !important;
+}
+
+h2 {
+  font-size: 1.75rem !important;
+}
+
+h3 {
+  font-size: 1.5rem !important;
+}
+
+h4 {
+  font-size: 1.25rem !important;
+}
+
+h5 {
+  font-size: 1rem !important;
+}
+
+h6 {
+  font-size: 0.875rem !important;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-league-spartan {
+  font-family: "League Spartan", "Roboto", "Poppins", sans-serif;
+}
+
+.container {
+  max-width: 1440px !important;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-mini {
+  font-size: 10px;
+}
+
+@each $name, $color in $colors {
+  .#{$name}-text {
+    color: rgb($color);
+  }
+
+  .hover-#{$name}-text {
+    &:hover {
+      color: rgb($color);
+    }
+  }
+
+  .\!#{$name}-text {
+    color: rgb($color) !important;
+  }
+
+  .#{$name}-bg {
+    background-color: rgb($color);
+  }
+
+  .\!#{$name}-bg {
+    background-color: rgb($color) !important;
+  }
+
+  .#{$name}-border {
+    border-color: rgb($color);
+  }
+
+  .hover-#{$name}-bg {
+    &:hover {
+      background-color: rgb($color);
+    }
+  }
+}
+
+@for $i from 1 through 10 {
+  .limit-line-#{$i} {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: #{$i};
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+}
+
+// Override
+.filepond--drop-label {
+  label {
+    cursor: pointer;
+  }
+}

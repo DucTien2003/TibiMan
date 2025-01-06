@@ -1,0 +1,11 @@
+@use '/src/assets/styles/variables.scss' as *;
+
+.MuiPaginationItem-outlined {
+  font-weight: 600;
+
+  &.Mui-selected {
+    border: 1px solid var(--theme-primary);
+    color: var(--theme-primary);
+    background-color: rgba($color: var(--theme-primary), $alpha: 0.1);
+  }
+}

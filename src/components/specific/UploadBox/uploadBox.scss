@@ -1,0 +1,39 @@
+.filepond--wrapper {
+  width: 130px;
+  height: 100%;
+  cursor: pointer;
+
+  .filepond--root,
+  .filepond--drop-label {
+    height: 100% !important;
+    margin: 0;
+
+    label {
+      padding: 0;
+    }
+  }
+
+  .filepond--list-scroller {
+    margin: 0;
+  }
+
+  .filepond--panel {
+    background: transparent;
+  }
+
+  .filepond--browser {
+    width: 0;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.filepond--credits {
+  display: none;
+}
+
+.sortable-item {
+  display: none !important;
+}

@@ -1,0 +1,23 @@
+@use '/src/assets/styles/variables.scss' as *;
+
+.card-overlay {
+  &:hover {
+    .description {
+      display: grid;
+    }
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .card-name {
+      color: rgb(var(--theme-primary));
+    }
+
+    .card-author {
+      color: white;
+    }
+  }
+}
+
+.card-info {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.3));
+}

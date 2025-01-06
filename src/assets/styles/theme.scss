@@ -1,0 +1,105 @@
+$theme-colors: (
+  // Colors
+  "theme-primary-main": var(--theme-primary-main),
+  "theme-primary-light": var(--theme-primary-light),
+  "theme-primary-dark": var(--theme-primary-dark),
+  "theme-primary-contrast": var(--theme-primary-contrastText),
+  "theme-secondary-main": var(--theme-secondary-main),
+  "theme-secondary-light": var(--theme-secondary-light),
+  "theme-secondary-dark": var(--theme-secondary-dark),
+  "theme-secondary-contrast": var(--theme-secondary-contrastText),
+  "theme-background-default": var(--theme-background-default),
+  "theme-background-paper": var(--theme-background-paper),
+  "theme-text-primary": var(--theme-text-primary),
+  "theme-text-secondary": var(--theme-text-secondary),
+  "theme-success-main": var(--theme-success-main),
+  "theme-success-light": var(--theme-success-light),
+  "theme-success-dark": var(--theme-success-dark),
+  "theme-success-contrast": var(--theme-success-contrastText),
+  "theme-info-main": var(--theme-info-main),
+  "theme-info-light": var(--theme-info-light),
+  "theme-info-dark": var(--theme-info-dark),
+  "theme-info-contrast": var(--theme-info-contrastText),
+  "theme-warning-main": var(--theme-warning-main),
+  "theme-warning-light": var(--theme-warning-light),
+  "theme-warning-dark": var(--theme-warning-dark),
+  "theme-warning-contrast": var(--theme-warning-contrastText),
+  "theme-error-main": var(--theme-error-main),
+  "theme-error-light": var(--theme-error-light),
+  "theme-error-dark": var(--theme-error-dark),
+  "theme-error-contrast": var(--theme-error-contrastText),
+  "theme-gray-100": var(--theme-gray-100),
+  "theme-gray-200": var(--theme-gray-200),
+  "theme-gray-300": var(--theme-gray-300),
+  "theme-gray-400": var(--theme-gray-400),
+  "theme-gray-500": var(--theme-gray-500),
+  "theme-gray-600": var(--theme-gray-600),
+  "theme-gray-700": var(--theme-gray-700),
+  "theme-gray-800": var(--theme-gray-800),
+  "theme-gray-900": var(--theme-gray-900)
+);
+
+@each $name, $color in $theme-colors {
+  .#{$name} {
+    color: rgb($color);
+  }
+  .bg-#{$name} {
+    background-color: rgb($color);
+  }
+  .border-#{$name} {
+    border-color: rgb($color);
+  }
+  .fill-#{$name} {
+    fill: rgb($color);
+  }
+  .stroke-#{$name} {
+    stroke: rgb($color);
+  }
+
+  // Important
+  .#{$name}-imp {
+    color: rgb($color) !important;
+  }
+  .bg-#{$name}-imp {
+    background-color: rgb($color) !important;
+  }
+  .border-#{$name}-imp {
+    border-color: rgb($color) !important;
+  }
+  .fill-#{$name}-imp {
+    fill: rgb($color) !important;
+  }
+  .stroke-#{$name}-imp {
+    stroke: rgb($color) !important;
+  }
+
+  // Hover
+  .#{$name}-hover {
+    :hover {
+      color: rgb($color) !important;
+    }
+  }
+  .bg-#{$name}-hover:hover {
+    background-color: rgb($color) !important;
+  }
+  .border-#{$name}-hover:hover {
+    border-color: rgb($color) !important;
+  }
+  .fill-#{$name}-hover:hover {
+    fill: rgb($color) !important;
+  }
+  .stroke-#{$name}-hover:hover {
+    stroke: rgb($color) !important;
+  }
+}
+
+// 0.1	1A
+// 0.2	33
+// 0.3	4D
+// 0.4	66
+// 0.5	80
+// 0.6	99
+// 0.7	B3
+// 0.8	CC
+// 0.9	E6
+// 1.0	FF

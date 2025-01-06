@@ -1,0 +1,39 @@
+/* Show - Hide */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+// Change color
+.transition-1\/4 {
+  transition: all 0.25s ease-in-out;
+}
+
+.transition-1\/2 {
+  transition: all 0.5s ease-in-out;
+}
+
+.transition-3\/4 {
+  transition: all 0.75s ease-in-out;
+}
+
+.transition-1 {
+  transition: all 1s ease-in-out;
+}

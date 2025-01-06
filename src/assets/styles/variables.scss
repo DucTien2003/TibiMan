@@ -1,0 +1,76 @@
+:root {
+  --scrollbar-color: #e0e4e6;
+
+  // Static theme colors
+  --black: 0, 0, 0;
+  --white: 255, 255, 255;
+  --theme-black: 15, 15, 15;
+  --theme-black-10: 34, 34, 34;
+  --theme-black-20: 49, 49, 49;
+  --theme-white: 255, 255, 255;
+  --theme-white-10: 235, 235, 235;
+  --theme-white-20: 218, 220, 223;
+  --theme-gray: 128, 128, 128;
+  --theme-gray-10: 196, 196, 196;
+  --theme-orange: 255, 103, 64;
+  --theme-yellow: 248, 167, 26;
+  --theme-red: 229, 9, 20;
+  --theme-red-10: 255, 34, 34;
+  --theme-red-20: 255, 68, 68;
+  --theme-green: 0, 168, 89;
+  --theme-blue: 0, 119, 204;
+  --theme-purple: 111, 66, 193;
+  --theme-pink: 233, 30, 99;
+  --theme-cyan: 23, 162, 184;
+
+  // Dynamic theme colors
+  --theme-primary: var(--theme-orange);
+  --theme-text: var(--theme-black);
+  --theme-background: var(--theme-white);
+  --theme-background-10: var(--theme-white-10);
+  --theme-background-20: var(--theme-white-20);
+  --theme-border: var(--theme-gray-10);
+  --theme-text-10: var(--theme-black-10);
+  --theme-text-20: var(--theme-black-20);
+
+  // New theme colors
+  --theme-success: 0, 168, 89;
+  --theme-info: 0, 207, 232;
+  --theme-warning: 255, 159, 67;
+  --theme-error: 234, 84, 85;
+}
+
+// Theme colors
+$colors: (
+  "black": var(--black),
+  "white": var(--white),
+  "theme-primary": var(--theme-primary),
+  "theme-black": var(--theme-black),
+  "theme-black-10": var(--theme-black-10),
+  "theme-black-20": var(--theme-black-20),
+  "theme-gray": var(--theme-gray),
+  "theme-gray-10": var(--theme-gray-10),
+  "theme-white": var(--theme-white),
+  "theme-white-10": var(--theme-white-10),
+  "theme-white-20": var(--theme-white-20),
+  "theme-orange": var(--theme-orange),
+  "theme-yellow": var(--theme-yellow),
+  "theme-red": var(--theme-red),
+  "theme-green": var(--theme-green),
+  "theme-blue": var(--theme-blue),
+  "theme-purple": var(--theme-purple),
+  "theme-pink": var(--theme-pink),
+  "theme-cyan": var(--theme-cyan),
+  "theme-text": var(--theme-text),
+  "theme-background": var(--theme-background),
+  "theme-background-10": var(--theme-background-10),
+  "theme-background-20": var(--theme-background-20),
+  "theme-border": var(--theme-border),
+  "theme-text-10": var(--theme-text-10),
+  "theme-text-20": var(--theme-text-20),
+  // New theme colors
+  "theme-success": var(--theme-success),
+  "theme-info": var(--theme-info),
+  "theme-warning": var(--theme-warning),
+  "theme-error": var(--theme-error),
+);

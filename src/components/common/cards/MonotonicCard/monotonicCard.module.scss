@@ -1,0 +1,9 @@
+@use '/src/assets/styles/variables.scss' as *;
+
+.monotonic-card {
+  &:hover {
+    .card-name {
+      color: rgb(var(--theme-primary)) !important;
+    }
+  }
+}

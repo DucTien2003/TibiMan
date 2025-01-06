@@ -1,0 +1,45 @@
+@use './variables' as *;
+
+#multiple-filter {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  line-height: 32px;
+}
+
+#multiple-filter-label {
+  &.Mui-focused {
+    color: rgb(var(--theme-primary));
+  }
+}
+
+.Mui-focused {
+  .MuiOutlinedInput-notchedOutline {
+    border-color: rgb(var(--theme-primary)) !important;
+  }
+}
+
+// Chapter selector
+.MuiList-root.MuiList-padding.MuiMenu-list {
+  .MuiButtonBase-root {
+    padding: 0;
+  }
+}
+
+#status-selector,
+#chapter-selector {
+  a,
+  span {
+    padding: 0 !important;
+  }
+}
+
+// Genres selector
+.genres-selector {
+  .MuiAutocomplete-endAdornment {
+    display: none;
+  }
+
+  .MuiInputBase-root {
+    padding: 8px !important;
+  }
+}

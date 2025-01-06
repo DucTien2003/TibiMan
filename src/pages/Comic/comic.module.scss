@@ -1,0 +1,14 @@
+@use '/src/assets/styles/variables.scss' as *;
+
+.banner-bg {
+  object-position: 0px 30%;
+}
+
+.banner-overlay {
+  backdrop-filter: blur(4px);
+  background: linear-gradient(
+    67.81deg,
+    rgba(0, 0, 0, 0.64) 35.51%,
+    transparent
+  );
+}

@@ -1,0 +1,15 @@
+@use '/src/assets/styles/variables.scss' as *;
+
+.header-box {
+  background: rgba($color: var(--theme-primary), $alpha: 0.4);
+}
+
+.body-box {
+  border: 1px solid rgba($color: var(--theme-primary), $alpha: 0.4);
+}
+
+.item-chapter {
+  &:hover {
+    background: rgba($color: var(--theme-primary), $alpha: 0.2);
+  }
+}
