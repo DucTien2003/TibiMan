@@ -67,7 +67,7 @@ function AppInput({
                 variant={variant}
                 multiline={multiline}
                 rows={multiline ? rows : 1}
-                label={label + (required ? " *" : "")}
+                label={label + (required ? "*" : "")}
                 type={showPassword ? "text" : type}
                 className={clsx(
                   { [styles["error-input"]]: errors[id] },

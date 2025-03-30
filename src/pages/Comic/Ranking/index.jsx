@@ -1,11 +1,22 @@
-import { useState, useMemo } from "react";
-import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import TabContext from "@mui/lab/TabContext";
+import Divider from "@mui/material/Divider";
+import Tab from "@mui/material/Tab";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { comicsApi } from "@/api";
+import Cover from "@/components/common/Cover";
 import { useGetData } from "@/hooks";
+import { comicUrl } from "@/routes";
+import {
+  FaRegClock,
+  FaRegStar,
+  FiBookmark,
+  MdOutlineRemoveRedEye,
+  timeAgo,
+} from "@/utils";
 
 export default function Ranking() {
   const [rankingType, setRankingType] = useState("day");
@@ -17,9 +28,18 @@ export default function Ranking() {
   // Apis
   const staticApis = useMemo(
     () => [
-      { url: comicsApi(), query: { limit: 5, orderBy: "views" } },
-      { url: comicsApi(), query: { limit: 5, orderBy: "views" } },
-      { url: comicsApi(), query: { limit: 5, orderBy: "views" } },
+      {
+        url: comicsApi(),
+        query: { limit: 5, orderBy: "views", sortType: "DESC" },
+      },
+      {
+        url: comicsApi(),
+        query: { limit: 5, orderBy: "views", sortType: "ASC" },
+      },
+      {
+        url: comicsApi(),
+        query: { limit: 5, orderBy: "views", sortType: "DESC" },
+      },
     ],
     []
   );
@@ -30,16 +50,17 @@ export default function Ranking() {
     return;
   }
 
-  const [comicsOfday, comicsOfmonth, topComics] =
+  const [comicsOfDay, comicsOfMonth, topComics] =
     staticResponse.responseData || [];
 
   const rankData = [
-    { comics: comicsOfday.comics, title: "Top ngày", value: "day" },
-    { comics: comicsOfmonth.comics, title: "Top tháng", value: "month" },
+    { comics: comicsOfDay.comics, title: "Top ngày", value: "day" },
+    { comics: comicsOfMonth.comics, title: "Top tháng", value: "month" },
     { comics: topComics.comics, title: "Top all", value: "all" },
   ];
   return (
     <TabContext value={rankingType}>
+      {/* Tabs */}
       <TabList
         className="bg-theme-gray-800 rounded"
         onChange={handleChange}
@@ -53,17 +74,72 @@ export default function Ranking() {
           />
         ))}
       </TabList>
+
+      <div className="py-2">
+        <Divider />
+      </div>
+
+      {/* Tab data */}
       {rankData.map((data, index) => (
-        <TabPanel key={index} value={data.value}>
-          <div>
-            {data.comics.map((comic, index) => {
-              return (
-                <div key={index} className="w-full">
-                  <DetailCard comic={comic} />
-                </div>
-              );
-            })}
-          </div>
+        <TabPanel key={index} value={data.value} className="!px-0 !pb-2 !pt-0">
+          {data.comics.map((comic, index) => {
+            return (
+              <div key={index} className="w-full">
+                <Link
+                  to={comicUrl(comic.id)}
+                  className="bg-theme-gray-800-hover parent-hover flex gap-2 rounded px-2 py-1">
+                  {/* Cover */}
+                  <div className="w-[75px]">
+                    <Cover comic={comic} />
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex flex-1 flex-col justify-between">
+                    <div>
+                      <h4
+                        className="theme-primary-main-parent-hover limit-line-2 font-bold leading-6"
+                        title={comic.name}>
+                        {comic.name}
+                      </h4>
+                      <p className="theme-gray-200 limit-line-1 text-sm">
+                        {comic.author}
+                      </p>
+                    </div>
+
+                    {/* Comment - View - Release date */}
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex gap-2.5">
+                        <div className="flex items-center gap-0.5">
+                          <MdOutlineRemoveRedEye />
+                          {comic.views}
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <FaRegStar />
+                          {comic.rating}
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <FiBookmark />
+                          {comic.bookmarks}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-0.5 text-xs">
+                        <FaRegClock />
+                        {timeAgo(comic.updatedAt)}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Divider */}
+                {index !== data.comics.length - 1 && (
+                  <div className="py-2">
+                    <Divider />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </TabPanel>
       ))}
     </TabContext>

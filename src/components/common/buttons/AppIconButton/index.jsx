@@ -1,24 +1,26 @@
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 function AppIconButton(props) {
   const {
     children,
-    hoverColor = 'primary.main',
-    color = 'gray.500',
+    hoverColor = "primary.main",
+    tooltip = "",
     ...otherProps
   } = props;
 
   return (
-    <IconButton
-      {...otherProps}
-      sx={{
-        color,
-        '&:hover': {
-          color: hoverColor,
-        },
-      }}>
-      {children}
-    </IconButton>
+    <Tooltip title={tooltip}>
+      <IconButton
+        {...otherProps}
+        sx={{
+          "&:hover": {
+            color: hoverColor,
+          },
+        }}>
+        {children}
+      </IconButton>
+    </Tooltip>
   );
 }
 

@@ -1,15 +1,16 @@
-import Modal from '@mui/material/Modal';
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/system";
+import { useState, forwardRef, useImperativeHandle } from "react";
 
-import { IoClose } from '@/utils';
-import DefaultButton from '@/components/common/buttons/DefaultButton';
-import AppIconButton from '@/components/common/buttons/AppIconButton';
+import { IoClose } from "@/utils";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import AppIconButton from "@/components/common/buttons/AppIconButton";
 
 function ModalComponent(
   {
-    title = '',
-    closeTitle = 'Cancel',
-    submitTitle = 'Confirm',
+    title = "",
+    closeTitle = "Cancel",
+    submitTitle = "Confirm",
     handleSubmit = () => {},
     children,
   },
@@ -43,12 +44,14 @@ function ModalComponent(
           timeout: 300,
         },
       }}>
-      <div className="theme-background-bg absolute left-1/2 top-1/2 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded px-5 py-3 shadow-2xl">
+      <Box
+        sx={{ backgroundColor: "background.default" }}
+        className="absolute left-1/2 top-1/2 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded px-5 py-3 shadow-2xl">
         <div className="flex flex-col">
           <div className="theme-gray-border mb-3 flex items-center justify-between border-b border-solid pb-2">
             <h4 className="font-medium">{title}</h4>
             <AppIconButton onClick={handleClose}>
-              <IoClose />
+              <IoClose size={18} />
             </AppIconButton>
           </div>
           <div>{children}</div>
@@ -70,7 +73,7 @@ function ModalComponent(
             </DefaultButton>
           </div>
         </div>
-      </div>
+      </Box>
     </Modal>
   );
 }

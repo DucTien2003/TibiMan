@@ -38,7 +38,7 @@ function ComicInfo({ comicId, comicInfo = {} }) {
   // For form
   const [formControllerData, setFormControllerData] = useState(comicInfo);
   const methods = useForm();
-  const { setError } = methods;
+  // const { setError } = methods;
 
   const [initialFiles, setCoverFile] = useState([]);
 
@@ -122,10 +122,12 @@ function ComicInfo({ comicId, comicInfo = {} }) {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="mb-4 flex items-center justify-end">
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col-reverse gap-6 md:flex-col">
+        <div className="flex items-center justify-end">
           <DefaultButton
-            className="!mr-3 h-12 !rounded-md border !px-10 text-lg font-medium"
+            className="!mr-3 !rounded-md border text-lg font-medium"
             variant="outlined"
             onClick={() => resetModalRef.current.openModal()}>
             Cài lại
@@ -133,41 +135,41 @@ function ComicInfo({ comicId, comicInfo = {} }) {
 
           <DefaultButton
             type="submit"
-            className="h-12 !rounded-md !px-10 text-lg font-medium">
+            className="!rounded-md text-lg font-medium">
             {comicId ? "Cập nhật" : "Tạo truyện"}
           </DefaultButton>
         </div>
 
-        <div className="flex">
-          {/* Cover + Name */}
-          <div className="flex w-1/4 flex-col items-center">
-            <div>
-              <UploadBox
-                isSingle={true}
-                label="Ảnh bìa*"
-                showName={false}
-                ref={coverRef}
-                initialData={comicInfo.cover ? initialFiles : []}
-              />
-            </div>
+        <div className="flex flex-col gap-6 py-4 md:flex-row">
+          <div className="md:w-1/2">
+            <div className="flex flex-col gap-6 md:flex-row">
+              {/* Cover + Name */}
+              <div className="flex flex-col items-center justify-center md:w-1/2">
+                <div>
+                  <UploadBox
+                    isSingle={true}
+                    label="Ảnh bìa*"
+                    showName={false}
+                    ref={coverRef}
+                    initialData={comicInfo.cover ? initialFiles : []}
+                  />
+                </div>
 
-            <div className="mt-3 w-full">
-              <AppTextFieldInput
-                id="name"
-                name="Tên truyện"
-                label="Tên truyện"
-                required={true}
-                variant="standard"
-                defaultValue={comicInfo.name || ""}
-                validate={[requiredAcceptSpace]}
-              />
-            </div>
-          </div>
+                <div className="mt-3 w-full">
+                  <AppTextFieldInput
+                    id="name"
+                    name="Tên truyện"
+                    label="Tên truyện"
+                    required={true}
+                    variant="standard"
+                    defaultValue={comicInfo.name || ""}
+                    validate={[requiredAcceptSpace]}
+                  />
+                </div>
+              </div>
 
-          {/* Details */}
-          <div className="flex flex-1 flex-wrap pl-6">
-            <div className="w-1/3">
-              <div className="flex flex-col gap-7">
+              {/* Author + Translator + Sub name + Status */}
+              <div className="flex flex-1 flex-col justify-between gap-6">
                 {/* Author */}
                 <div>
                   <AppTextFieldInput
@@ -220,33 +222,34 @@ function ComicInfo({ comicId, comicInfo = {} }) {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="flex flex-1 flex-col pl-2">
-              {/* Description */}
-              <div>
-                <AppTextFieldInput
-                  id="description"
-                  name="Mô tả"
-                  label="Mô tả"
-                  defaultValue={comicInfo.description || ""}
-                  size="small"
-                  multiline={true}
-                  rows={7}
-                />
-              </div>
-              {/* Genres */}
-              <div className="mt-2">
-                <GenresSelector
-                  id="genres"
-                  label="Thể loại"
-                  initialData={
-                    comicInfo.genres
-                      ? comicInfo.genres.map((genre) => genre.id)
-                      : []
-                  }
-                  ref={genresSelectorRef}
-                />
-              </div>
+          {/* Description + Genres */}
+          <div className="flex flex-1 flex-col gap-6 md:w-1/2 md:justify-between md:gap-3.5">
+            {/* Description */}
+            <div>
+              <AppTextFieldInput
+                id="description"
+                name="Mô tả"
+                label="Mô tả"
+                defaultValue={comicInfo.description || ""}
+                size="small"
+                multiline={true}
+                rows={7}
+              />
+            </div>
+            {/* Genres */}
+            <div>
+              <GenresSelector
+                id="genres"
+                label="Thể loại"
+                initialData={
+                  comicInfo.genres
+                    ? comicInfo.genres.map((genre) => genre.id)
+                    : []
+                }
+                ref={genresSelectorRef}
+              />
             </div>
           </div>
         </div>

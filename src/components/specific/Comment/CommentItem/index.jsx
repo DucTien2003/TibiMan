@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
 
-import axiosRequest from "@/api/axiosRequest";
 import ReplyItem from "./ReplyItem";
+import axiosRequest from "@/api/axiosRequest";
+import userAvatar1 from "@/assets/images/user-avatar-1.png";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { useAuthStore } from "@/store";
 import {
@@ -30,10 +31,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
     comment.rightValue
   );
 
-  console.log(commentInfo);
-
   const handleLike = async (selectedComment, setData) => {
-    console.log(selectedComment);
     if (isLogin) {
       if (selectedComment.authLiked) {
         await axiosRequest(commentIdLikeDislikeApi(selectedComment.id), {
@@ -84,13 +82,11 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
   };
 
   const handleShowReplyInput = (rightValue) => {
-    console.log(rightValue, commentInfo.rightValue);
     setRightValueComment(rightValue);
     setIsReply(!isReply);
   };
 
   const handleReplyComment = async () => {
-    console.log(comment.rightValue, commentInfo.rightValue);
     const commentContent = replyInputRef.current.value;
 
     if (commentContent.trim() === "") {
@@ -130,10 +126,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
       {/* Avatar */}
       <div>
         <img
-          src={
-            commentInfo.user?.avatar ||
-            require("@/assets/images/user-avatar-1.png")
-          }
+          src={commentInfo.user?.avatar || userAvatar1}
           alt="avatar"
           className="mr-2 h-11 w-11 rounded-full"
         />
@@ -141,7 +134,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
 
       <div className="flex-1">
         <div className="flex flex-col">
-          <div className="flex flex-col rounded-lg bg-slate-100 p-2 shadow">
+          <div className="bg-theme-gray-800 flex flex-col rounded-lg p-2 shadow">
             {/* Name user comment */}
             <div className="flex items-center">
               <span className="font-medium">
@@ -159,33 +152,33 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
           </div>
 
           {/* Like - Dislike - Reply */}
-          <div className="mt-1 flex items-center">
-            <span
+          <div className="mt-1 flex items-center gap-0.5 md:gap-1">
+            <div
               className={clsx(
                 { "theme-primary-text": commentInfo.authLiked },
-                "flex cursor-pointer items-center"
+                "flex cursor-pointer items-center gap-1"
               )}
               onClick={() => handleLike(commentInfo, setCommentInfo)}>
-              <AiOutlineLike className="mr-1" />
+              <AiOutlineLike className="" />
               <span className="text-xs">{commentInfo.likes}</span>
-            </span>
-            <span
+            </div>
+            <div
               className={clsx(
                 { "theme-primary-text": commentInfo.authDisliked },
-                "ml-3 flex cursor-pointer items-center"
+                "ml-3 flex cursor-pointer items-center gap-1"
               )}
               onClick={() => handleDislike(commentInfo, setCommentInfo)}>
-              <AiOutlineDislike className="mr-1" />
+              <AiOutlineDislike className="" />
               <span className="text-xs">{commentInfo.dislikes}</span>
-            </span>
-            <span
+            </div>
+            <div
               className={clsx(
-                "hover-theme-primary-text ml-3 flex cursor-pointer items-center"
+                "hover-theme-primary-text ml-3 flex cursor-pointer items-center gap-1"
               )}
               onClick={() => handleShowReplyInput(commentInfo.rightValue)}>
-              <FaRegComment className="mr-1" />
+              <FaRegComment className="" />
               <span className="text-xs">Reply</span>
-            </span>
+            </div>
             <div className="ml-3 text-xs">{timeAgo(commentInfo.createdAt)}</div>
           </div>
         </div>
@@ -194,7 +187,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
         {!!commentInfo.replies && commentInfo.replies.length > 0 && (
           <div>
             {isShowReplied ? (
-              commentInfo.replies.map((reply, index) => (
+              commentInfo.replies.map((reply) => (
                 <div className="mt-4 flex" key={reply.id}>
                   <ReplyItem
                     reply={reply}
@@ -206,7 +199,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
               ))
             ) : (
               <p
-                className="hover-theme-primary-text mt-3 cursor-pointer text-sm hover:underline"
+                className="hover-theme-primary-text mt-3 inline-block cursor-pointer text-sm hover:underline"
                 onClick={() => setIsShowReplied(true)}>
                 {`View all ${commentInfo.replies.length} replies`}
               </p>
@@ -220,10 +213,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
             <div className="flex">
               <div className="mr-2">
                 <img
-                  src={
-                    authState?.avatar ||
-                    require("@/assets/images/user-avatar-1.png")
-                  }
+                  src={authState?.avatar || userAvatar1}
                   alt="avatar"
                   className="h-8 w-8 rounded-full"
                 />
@@ -233,10 +223,12 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
                 rows={2}
                 type="text"
                 placeholder="Write your reply..."
-                className={clsx("flex-1 rounded-lg bg-slate-100 p-2")}
+                className={clsx(
+                  "bg-theme-gray-800 flex-1 rounded-lg p-2 shadow"
+                )}
               />
             </div>
-            <div className="mt-1 w-full text-end">
+            <div className="mt-2 w-full text-end">
               <DefaultButton variant="contained" onClick={handleReplyComment}>
                 Send
               </DefaultButton>

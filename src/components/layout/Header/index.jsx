@@ -56,7 +56,7 @@ function Header({ isAbsolute = false }) {
           {/* Search / User menu */}
           <div className="flex flex-1 items-center justify-end gap-4 text-end">
             {/* Search */}
-            <div className="flex flex-1 justify-end">
+            <div className="hidden flex-1 justify-end md:flex">
               <SearchInput />
             </div>
 

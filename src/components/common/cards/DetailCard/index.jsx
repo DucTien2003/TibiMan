@@ -1,11 +1,12 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 
-import styles from "./detailCard.module.scss";
 import Cover from "@/components/common/Cover";
+import { chapterUrl, comicUrl } from "@/routes";
 import { useThemeStore } from "@/store";
-import { comicUrl, chapterUrl } from "@/routes";
-import { FaEye, FaRegStar, FiBookmark, FaRegComment, timeAgo } from "@/utils";
+import { FaEye, FaRegComment, FaRegStar, FiBookmark, timeAgo } from "@/utils";
+
+import styles from "./detailCard.module.scss";
 
 function DetailCard({ comic }) {
   const [themeState] = useThemeStore();
@@ -14,7 +15,7 @@ function DetailCard({ comic }) {
     <div className="w-full overflow-hidden rounded shadow-2xl">
       {/* Cover */}
       <Link
-        to={comicUrl(comic.name, comic.id)}
+        to={comicUrl(comic.id)}
         className="relative overflow-hidden rounded">
         <Cover comic={comic} />
 
@@ -74,12 +75,7 @@ function DetailCard({ comic }) {
 
         <div className="flex items-center justify-between py-1">
           <Link
-            to={chapterUrl(
-              comic.name,
-              comic.id,
-              comic.latestChapter.name,
-              comic.latestChapter.id
-            )}
+            to={chapterUrl(comic.id, comic.latestChapter.id)}
             className={clsx(
               "hover-theme-primary-text limit-line-1 inline-block flex-1 break-all text-xs font-medium"
             )}

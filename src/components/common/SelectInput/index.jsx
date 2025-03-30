@@ -1,11 +1,11 @@
-import { useState, forwardRef, useImperativeHandle } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { forwardRef, useImperativeHandle, useState } from "react";
 
 function SelectInput(
-  { id, list, label, size = 'normal', initialValue = { value: '', title: '' } },
+  { id, list, label, size = "normal", initialValue = { value: "", title: "" } },
   ref
 ) {
   const [value, setValue] = useState(initialValue.value);

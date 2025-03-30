@@ -1,17 +1,16 @@
-import Chip from "@mui/material/Chip";
 import { Autocomplete } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
-
 import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
   useMemo,
   useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
 } from "react";
 
-import { useGetData } from "@/hooks";
 import { genresApi } from "@/api";
+import { useGetData } from "@/hooks";
 
 function GenresSelector({ label, id, initialData = [] }, ref) {
   const [selectedGenres, setSelectedGenres] = useState(initialData);
@@ -57,7 +56,7 @@ function GenresSelector({ label, id, initialData = [] }, ref) {
   const [{ genres }] = staticResponse.responseData;
 
   return (
-    <div className="genres-selector py-1">
+    <div className="genres-selector">
       <Autocomplete
         multiple
         id={`${id}-autocomplete`}

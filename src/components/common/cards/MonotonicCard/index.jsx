@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 
-import styles from "./monotonicCard.module.scss";
-
 import Cover from "@/components/common/Cover";
-
-import { useThemeStore } from "@/store";
 import { comicUrl } from "@/routes";
+import { useThemeStore } from "@/store";
+
+import styles from "./monotonicCard.module.scss";
 
 function MonotonicCard({ comic }) {
   const [themeState] = useThemeStore();
@@ -17,7 +16,7 @@ function MonotonicCard({ comic }) {
         styles["monotonic-card"],
         "w-full cursor-pointer overflow-hidden rounded shadow-xl"
       )}
-      to={comicUrl(comic.name, comic.id)}>
+      to={comicUrl(comic.id)}>
       {/* Cover */}
       <div className="theme-primary-border rounded border">
         <Cover comic={comic} />

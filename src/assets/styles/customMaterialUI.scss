@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use "./variables" as *;
 
 #multiple-filter {
   padding-top: 12px;
@@ -27,6 +27,8 @@
 
 #status-selector,
 #chapter-selector {
+  padding: 11.5px 14px;
+
   a,
   span {
     padding: 0 !important;
@@ -42,4 +44,28 @@
   .MuiInputBase-root {
     padding: 8px !important;
   }
+}
+
+// Tabs
+.MuiButtonBase-root.MuiTab-root {
+  padding: 12px !important;
+}
+
+// Scrollbar for tables
+.MuiDataGrid-scrollbar {
+  height: 8px !important;
+}
+
+// Pagination data table
+.MuiDataGrid-footerContainer {
+  min-height: auto !important;
+
+  .MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar {
+    display: none;
+  }
+}
+
+// Tooltip
+.MuiTooltip-tooltip.MuiTooltip-tooltipPlacementBottom {
+  margin-top: 4px !important;
 }

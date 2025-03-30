@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { FilePond } from "react-filepond";
 import { ReactSortable } from "react-sortablejs";
-import React, {
+import {
   useRef,
   Fragment,
   useState,
@@ -117,7 +117,7 @@ const UploadBox = (
         {files.map((file, index) => (
           <div
             key={index}
-            className="relative flex aspect-[7/10] w-[130px] cursor-pointer items-center justify-center rounded-md border border-gray-200 shadow-xl">
+            className="relative flex aspect-[7/10] w-[130px] cursor-pointer items-center justify-center rounded-sm border border-gray-200 shadow-xl">
             {/* Image */}
             <img
               src={URL.createObjectURL(file)}

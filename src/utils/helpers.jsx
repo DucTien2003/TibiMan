@@ -25,31 +25,31 @@ const timeAgo = (timestamp) => {
   const diffInSeconds = Math.floor((now - time) / 1000);
 
   if (diffInSeconds < 60) {
-    return `${diffInSeconds} seconds ago`;
+    return `${diffInSeconds}s`;
   }
 
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) {
-    return `${diffInMinutes} minutes ago`;
+    return `${diffInMinutes}m`;
   }
 
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) {
-    return `${diffInHours} hours ago`;
+    return `${diffInHours}h`;
   }
 
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays < 30) {
-    return `${diffInDays} days ago`;
+    return `${diffInDays} ngày`;
   }
 
   const diffInMonths = Math.floor(diffInDays / 30);
   if (diffInMonths < 12) {
-    return `${diffInMonths} months ago`;
+    return `${diffInMonths} tháng`;
   }
 
   const diffInYears = Math.floor(diffInMonths / 12);
-  return `${diffInYears} years ago`;
+  return `${diffInYears} năm`;
 };
 
 const timeStandard = (timestamp) => {
@@ -133,6 +133,31 @@ const hexToRgb = (hex) => {
   return `${r}, ${g}, ${b}`;
 };
 
+const handleStatusComic = (status) => {
+  switch (status) {
+    case "completed":
+      return {
+        text: "Hoàn thành",
+        color: "theme-success-main",
+      };
+    case "dropped":
+      return {
+        text: "Đã ngừng",
+        color: "theme-error-main",
+      };
+    case "ongoing":
+      return {
+        text: "Đang tiến hành",
+        color: "theme-warning-main",
+      };
+    default:
+      return {
+        text: "Đang cập nhật",
+        color: "theme-primary-main",
+      };
+  }
+};
+
 export {
   extend,
   addZero,
@@ -149,4 +174,5 @@ export {
   sortByLastNumber,
   convertImageToFile,
   capitalizeFirstLetter,
+  handleStatusComic,
 };

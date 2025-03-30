@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
+
 import axiosRequest from "@/api/axiosRequest";
-import { useState, useEffect } from "react";
 
 export function useGetData(apis) {
   const [error, setError] = useState(null);

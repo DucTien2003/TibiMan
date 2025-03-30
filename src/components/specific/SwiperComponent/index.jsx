@@ -8,7 +8,7 @@ import DescriptionCard from "@/components/common/cards/DescriptionCard";
 function SwiperComponent({
   comicList,
   numberOfSlides = 1,
-  gap = 30,
+  gap = 28,
   cardType = "detail",
 }) {
   let CardComponent;

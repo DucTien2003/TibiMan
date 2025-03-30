@@ -1,15 +1,16 @@
-import clsx from 'clsx';
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import clsx from "clsx";
+import { forwardRef, useImperativeHandle, useState } from "react";
 
-import styles from './input.module.scss';
-import { IoIosEye, IoIosEyeOff } from '@/utils';
+import { IoIosEye, IoIosEyeOff } from "@/utils";
+
+import styles from "./input.module.scss";
 
 function Input(
   { label, type, placeholder, id, name, validator = [], require = true },
   ref
 ) {
-  const [value, setValue] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [value, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -54,11 +55,11 @@ function Input(
       <span className="relative">
         <input
           className={clsx(
-            { [styles['error-input']]: errorMessage },
-            styles['input'],
-            'w-full rounded-lg text-black'
+            { [styles["error-input"]]: errorMessage },
+            styles["input"],
+            "w-full rounded-lg text-black"
           )}
-          type={showPassword ? 'text' : type}
+          type={showPassword ? "text" : type}
           placeholder={placeholder}
           name={name}
           id={id}
@@ -67,8 +68,8 @@ function Input(
         />
         <span
           className={clsx(
-            { hidden: type !== 'password' },
-            'theme-primary-text absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl'
+            { hidden: type !== "password" },
+            "theme-primary-text absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl"
           )}
           onClick={togglePassword}>
           {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
@@ -77,8 +78,8 @@ function Input(
       <div
         className={clsx(
           { invisible: !errorMessage },
-          styles['error-message'],
-          'mt-1 min-h-6'
+          styles["error-message"],
+          "mt-1 min-h-6"
         )}>
         {errorMessage}
       </div>

@@ -1,9 +1,9 @@
-import Drawer from './drawers/Drawer';
-import PersistentDrawer from './drawers/PersistentDrawer';
-import { useWindowResize } from '@/hooks';
+import Drawer from "./drawers/Drawer";
+import PersistentDrawer from "./drawers/PersistentDrawer";
+import { useWindowResize } from "@/hooks";
 
 function SideBar({ children }) {
-  const isMobile = useWindowResize();
+  const { isMobile } = useWindowResize();
 
   return (
     <div>

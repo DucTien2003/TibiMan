@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import axiosRequest from "@/api/axiosRequest";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { comicsIdRatingApi } from "@/api";
 import { FaRegStar } from "@/utils";
 import { useDropdown } from "@/hooks";
@@ -25,12 +26,8 @@ function Rating({ comicId, authRating, rating }) {
   const [rateValue, setRateValue] = useState(authRating);
 
   const handleRating = async (ratingValue) => {
-    // const comicRatingApiUrl = comicRatingApi(comicId);
     try {
       if (rateValue !== 0) {
-        // await axiosRequest().put(comicRatingApiUrl, {
-        //   rating: ratingValue,
-        // });
         await axiosRequest(comicsIdRatingApi(comicId), {
           method: "PUT",
           body: { rating: ratingValue },
@@ -38,9 +35,6 @@ function Rating({ comicId, authRating, rating }) {
 
         setRateValue(ratingValue);
       } else {
-        // await axiosCustom().post(comicRatingApiUrl, {
-        //   rating: ratingValue,
-        // });
         await axiosRequest(comicsIdRatingApi(comicId), {
           method: "POST",
           body: { rating: ratingValue },
@@ -54,9 +48,7 @@ function Rating({ comicId, authRating, rating }) {
   };
 
   const handleRemoveRating = async () => {
-    // const comicRatingApiUrl = comicRatingApi(comicId);
     try {
-      // const response = await axiosCustom().delete(comicRatingApiUrl);
       const response = await axiosRequest(comicsIdRatingApi(comicId), {
         method: "DELETE",
       });
@@ -73,21 +65,16 @@ function Rating({ comicId, authRating, rating }) {
       ref={dropdownRef}
       className="relative font-semibold text-black"
       onClick={() => setIsShowDropdown(!isShowDropdown)}>
-      <div
-        className={clsx(
-          {
-            "theme-primary-bg text-white": rateValue,
-            "bg-gray-200 hover:bg-gray-300": !rateValue,
-          },
-          "flex cursor-pointer items-center justify-center rounded-md py-3"
-        )}>
-        <FaRegStar className={"text-xl"} />
-        <div className="ml-1 flex items-center justify-center gap-1 text-[15px] font-medium">
-          <span>Đánh giá</span>
+      <DefaultButton
+        variant={rateValue ? "contained" : "outlined"}
+        className="flex h-12 w-full !min-w-24 gap-1 !rounded-md">
+        <FaRegStar size={20} />
+        <div className="flex items-center justify-center gap-1 text-[15px] font-medium">
+          <span className="hidden md:block">Đánh giá</span>
           <span>({rating})</span>
         </div>
         {/* {!!rateValue && <span className="ml-1 mt-1 text-lg ">{rateValue}</span>} */}
-      </div>
+      </DefaultButton>
 
       <div
         className={clsx(

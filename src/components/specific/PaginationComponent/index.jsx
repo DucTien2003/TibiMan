@@ -1,17 +1,17 @@
-import * as React from 'react';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import "./paginationComponent.scss";
 
-import './paginationComponent.scss';
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 function PaginationComponent({
-  size = 'large',
+  size = "large",
   itemPerPage = 36,
-  list,
+  count = 0,
+  currentPage = 1,
   showBoundaryButton = true,
   handlePageChange = () => {},
 }) {
-  const totalPage = Math.ceil(list.length / itemPerPage);
+  const totalPage = Math.ceil(count / itemPerPage);
 
   return (
     <Stack spacing={2}>
@@ -22,6 +22,9 @@ function PaginationComponent({
         showFirstButton={showBoundaryButton}
         showLastButton={showBoundaryButton}
         size={size}
+        page={currentPage}
+        siblingCount={1}
+        boundaryCount={1}
         onChange={(event, value) => handlePageChange(event, value)}
       />
     </Stack>

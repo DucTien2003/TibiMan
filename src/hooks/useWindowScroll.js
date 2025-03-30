@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 export const useWindowScroll = () => {
   const [isTopPage, setIsTopPage] = useState(window.scrollY === 0);
@@ -8,10 +8,10 @@ export const useWindowScroll = () => {
       setIsTopPage(window.scrollY === 0);
     };
 
-    window.addEventListener('scroll', handler);
+    window.addEventListener("scroll", handler);
 
     return () => {
-      window.removeEventListener('scroll', handler);
+      window.removeEventListener("scroll", handler);
     };
   }, []);
 

@@ -1,1 +1,0 @@
-export { latestUpdates } from './latestUpdates';

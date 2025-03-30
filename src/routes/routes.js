@@ -1,49 +1,62 @@
-import Home from '@/pages/Home';
-import Comic from '@/pages/Comic';
-import MyUpload from '@/pages/MyUpload';
-import Chapter from '@/pages/Chapter';
-import Login from '@/pages/auth/Login';
-import ComicList from '@/pages/ComicList';
-import Register from '@/pages/auth/Register';
-import UploadComic from '@/pages/UploadComic';
-import ResetPassword from '@/pages/auth/ResetPassword';
-import UpdatePassword from '@/pages/auth/UpdatePassword';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
+import { AuthLayout, PageComicsLayout } from "@/layouts";
+import ForgotPassword from "@/pages/auth/ForgotPassword";
+import Login from "@/pages/auth/Login";
+import Register from "@/pages/auth/Register";
+import ResetPassword from "@/pages/auth/ResetPassword";
+import UpdatePassword from "@/pages/auth/UpdatePassword";
+import Chapter from "@/pages/Chapter";
+import Comic from "@/pages/Comic";
+import ComicList from "@/pages/ComicList";
+import Home from "@/pages/Home";
+import MyUpload from "@/pages/MyUpload";
+import UploadComic from "@/pages/UploadComic";
 
-import { AuthLayout } from '@/layouts';
-import { homeUrl } from './urlStructure';
+import {
+  chapterUrl,
+  comicListUrl,
+  comicUrl,
+  detailComicUrl,
+  forgotPasswordUrl,
+  homeUrl,
+  loginUrl,
+  registerUrl,
+  resetPasswordUrl,
+  updatePasswordUrl,
+  uploadComicUrl,
+  uploadUrl,
+} from "./urlStructure";
 
 const publicRoutes = [
-  { path: '/', component: Home },
-  { path: '/:comicName/:comicId', component: Comic },
-  { path: '/comic-list', component: ComicList },
+  { path: homeUrl(), component: Home, layout: PageComicsLayout },
+  { path: comicUrl(), component: Comic },
+  { path: comicListUrl(), component: ComicList },
   {
-    path: '/:comicName/:comicId/:chapterName/:chapterId',
+    path: chapterUrl(),
     component: Chapter,
     headerAbsolute: true,
   },
 
   // Upload
-  { path: '/upload', component: MyUpload },
+  { path: uploadUrl(), component: MyUpload },
   {
-    path: '/upload/comic',
+    path: uploadComicUrl(),
     component: UploadComic,
     headerAbsolute: true,
   },
   {
-    path: '/upload/comic/:comicId',
+    path: detailComicUrl(),
     component: UploadComic,
     headerAbsolute: true,
   },
 
   // Auth
-  { path: '/login', component: Login, layout: AuthLayout },
-  { path: '/register', component: Register, layout: AuthLayout },
-  { path: '/reset-password', component: ResetPassword, layout: AuthLayout },
-  { path: '/update-password', component: UpdatePassword, layout: AuthLayout },
-  { path: '/forgot-password', component: ForgotPassword, layout: AuthLayout },
+  { path: loginUrl(), component: Login, layout: AuthLayout },
+  { path: registerUrl(), component: Register, layout: AuthLayout },
+  { path: resetPasswordUrl(), component: ResetPassword, layout: AuthLayout },
+  { path: updatePasswordUrl(), component: UpdatePassword, layout: AuthLayout },
+  { path: forgotPasswordUrl(), component: ForgotPassword, layout: AuthLayout },
 ];
 
-const privateRoutes = [{ path: 'admin', component: 'Admin' }];
+const privateRoutes = [{ path: "admin", component: "Admin" }];
 
-export { publicRoutes, privateRoutes };
+export { privateRoutes, publicRoutes };

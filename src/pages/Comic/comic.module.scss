@@ -1,8 +1,4 @@
-@use '/src/assets/styles/variables.scss' as *;
-
-.banner-bg {
-  object-position: 0px 30%;
-}
+@use "/src/assets/styles/variables.scss" as *;
 
 .banner-overlay {
   backdrop-filter: blur(4px);

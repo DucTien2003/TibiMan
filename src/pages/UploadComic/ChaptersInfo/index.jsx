@@ -4,7 +4,7 @@ import ListChapter from "./ListChapter";
 import UploadChapter from "./UploadChapter";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 
-function ChaptersInfo({ listChapters, comicInfo = {} }) {
+function ChaptersInfo({ comicInfo = {} }) {
   const [isUploading, setIsUploading] = useState(false);
   const [chapterUploading, setChapterUploading] = useState({});
 
@@ -19,9 +19,9 @@ function ChaptersInfo({ listChapters, comicInfo = {} }) {
   };
 
   return (
-    <div className="px-8">
+    <div className="">
       <DefaultButton
-        className="!mb-8 h-12 !rounded-md !px-10 text-lg font-medium"
+        className="!mb-8 !rounded-md text-lg font-medium"
         onClick={handleBackOrUploadNewChapter}>
         {isUploading ? "Danh sách chương" : "Tạo chương mới"}
       </DefaultButton>
@@ -34,9 +34,8 @@ function ChaptersInfo({ listChapters, comicInfo = {} }) {
         />
       ) : (
         <ListChapter
-          comicInfo={comicInfo}
-          listChapters={listChapters}
           handleGetImagesChapter={handleGetImagesChapter}
+          comicInfo={comicInfo}
         />
       )}
     </div>

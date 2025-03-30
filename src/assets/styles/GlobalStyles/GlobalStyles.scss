@@ -91,6 +91,15 @@ textarea {
   outline: none;
 }
 
+// Input number
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
 h1 {
   font-size: 2rem !important;
 }
@@ -115,6 +124,40 @@ h6 {
   font-size: 0.875rem !important;
 }
 
+p {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.35rem !important;
+  }
+
+  h3 {
+    font-size: 1.2rem !important;
+  }
+
+  h4 {
+    font-size: 1.05rem !important;
+  }
+
+  h5 {
+    font-size: 0.9rem !important;
+  }
+
+  h6 {
+    font-size: 0.75rem !important;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
 .font-roboto {
   font-family: "Roboto", sans-serif;
 }
@@ -133,6 +176,11 @@ h6 {
   padding-right: 2rem;
   margin-left: auto;
   margin-right: auto;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .text-mini {
@@ -181,6 +229,17 @@ h6 {
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     white-space: normal;
+  }
+
+  @media screen and (max-width: 768px) {
+    .limit-line-#{$i}-md {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: #{$i} !important;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
   }
 }
 

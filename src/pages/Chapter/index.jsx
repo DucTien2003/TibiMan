@@ -1,19 +1,28 @@
+import Button from "@mui/material/Button";
+import clsx from "clsx";
 import { useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import ChapterSelector from "@/components/specific/ChapterSelector";
-import { chapterUrl, comicUrl } from "@/routes";
-import { formatPath } from "@/utils";
-import { useGetData } from "@/hooks";
 import {
-  comicsIdApi,
   chaptersIdApi,
-  comicsIdChaptersApi,
   chaptersIdImagesApi,
+  comicsIdApi,
+  comicsIdChaptersApi,
 } from "@/api";
+import AppIconButton from "@/components/common/buttons/AppIconButton";
+import ChapterSelector from "@/components/specific/ChapterSelector";
+import Comment from "@/components/specific/Comment";
+import { useGetData } from "@/hooks";
+import { chapterUrl, comicUrl } from "@/routes";
+import { useThemeStore } from "@/store";
+import { FaAngleLeft, FaAngleRight } from "@/utils";
+
+import GoToTopButton from "./GoToTopButton";
 
 function Chapter() {
-  const { comicId, chapterId, comicName } = useParams();
+  const navigate = useNavigate();
+  const [themeState] = useThemeStore();
+  const { comicId, chapterId } = useParams();
 
   const staticApis = useMemo(
     () => [
@@ -61,31 +70,31 @@ function Chapter() {
   const isFirstChapter =
     chapterInfo.id === listChapters[listChapters.length - 1].id;
 
+  const PrevWrapper = isFirstChapter ? "div" : Link;
+  const NextWrapper = isLastChapter ? "div" : Link;
+
   const prevChapterUrl = isFirstChapter
-    ? "/"
-    : chapterUrl(
-        comicName,
-        comicId,
-        listChapters[chapterIndex + 1].name,
-        listChapters[chapterIndex + 1].id
-      );
+    ? ""
+    : chapterUrl(comicId, listChapters[chapterIndex + 1].id);
   const nextChapterUrl = isLastChapter
-    ? "/"
-    : chapterUrl(
-        comicName,
-        comicId,
-        listChapters[chapterIndex - 1].name,
-        listChapters[chapterIndex - 1].id
-      );
+    ? ""
+    : chapterUrl(comicId, listChapters[chapterIndex - 1].id);
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
-    <div>
+    <div className="position-relative container pb-20">
       {/* Header */}
-      <div className="container mt-20 pb-8">
+      <div className="mt-20 pb-8">
         {/* Title */}
-        <div className="flex items-center text-xl">
+        <div className="flex items-center gap-1 text-xl">
+          <AppIconButton color="black" onClick={handleBack}>
+            <FaAngleLeft className="text-lg" />
+          </AppIconButton>
           <Link
-            to={comicUrl(comicInfo.name, comicInfo.id)}
+            to={comicUrl(comicInfo.id)}
             className="hover-theme-primary-text theme-primary-text">
             {comicInfo.name}
           </Link>
@@ -95,17 +104,16 @@ function Chapter() {
 
         {/* Control */}
         <div className="mt-6 flex">
-          {isFirstChapter ? (
-            <div className="theme-border-border flex cursor-default items-center justify-center rounded px-10 font-medium">
-              Previous chapter
-            </div>
-          ) : (
-            <Link
-              to={prevChapterUrl}
-              className="theme-primary-border hover-theme-primary-text flex items-center justify-center rounded border px-10 font-medium">
-              Previous chapter
-            </Link>
-          )}
+          <PrevWrapper to={prevChapterUrl} className="min-w-48">
+            <Button
+              disabled={isFirstChapter}
+              variant="outlined"
+              className="flex h-full w-full items-center gap-1">
+              <FaAngleLeft className="mb-0.5" />
+              <span>Chương trước</span>
+            </Button>
+          </PrevWrapper>
+
           <div className="mx-3 flex-1">
             <ChapterSelector
               listChapters={listChapters}
@@ -113,22 +121,21 @@ function Chapter() {
               initialChapter={chapterInfo.numberOrder}
             />
           </div>
-          {isLastChapter ? (
-            <div className="theme-border-border flex cursor-default items-center justify-center rounded px-10 font-medium">
-              Next chapter
-            </div>
-          ) : (
-            <Link
-              to={nextChapterUrl}
-              className="theme-primary-border hover-theme-primary-text flex items-center justify-center rounded border px-10 font-medium">
-              Next chapter
-            </Link>
-          )}
+
+          <NextWrapper to={nextChapterUrl} className="min-w-48">
+            <Button
+              disabled={isLastChapter}
+              variant="outlined"
+              className="flex h-full w-full items-center gap-1">
+              <span>Chương sau</span>
+              <FaAngleRight className="mb-0.5" />
+            </Button>
+          </NextWrapper>
         </div>
       </div>
 
       {/* Content */}
-      <div className="mx-auto w-[1000px]">
+      <div className="mx-auto w-[850px]">
         {listImages.map((image, index) => {
           return (
             <div key={index}>
@@ -137,6 +144,54 @@ function Chapter() {
           );
         })}
       </div>
+
+      {/* Controller bottom */}
+      <div className="mt-6 flex">
+        <PrevWrapper to={prevChapterUrl} className="min-w-48">
+          <Button
+            disabled={isFirstChapter}
+            variant="outlined"
+            className="flex h-full w-full items-center gap-1">
+            <FaAngleLeft className="mb-0.5" />
+            <span>Chương trước</span>
+          </Button>
+        </PrevWrapper>
+
+        <div className="mx-3 flex-1">
+          <ChapterSelector
+            listChapters={listChapters}
+            comicId={comicId}
+            initialChapter={chapterInfo.numberOrder}
+          />
+        </div>
+
+        <NextWrapper to={nextChapterUrl} className="min-w-48">
+          <Button
+            disabled={isLastChapter}
+            variant="outlined"
+            className="flex h-full w-full items-center gap-1">
+            <span>Chương sau</span>
+            <FaAngleRight className="mb-0.5" />
+          </Button>
+        </NextWrapper>
+      </div>
+
+      {/* Comments */}
+      <div className="mt-12">
+        <h4 className="mb-2 font-medium">Bình luận</h4>
+        <div
+          className={clsx(
+            {
+              "border-theme-gray-700 border": themeState.theme === "light",
+            },
+            "bg-theme-gray-900 rounded-md p-2"
+          )}>
+          <Comment comicId={comicInfo.id} />
+        </div>
+      </div>
+
+      {/* Go to top button */}
+      <GoToTopButton />
     </div>
   );
 }

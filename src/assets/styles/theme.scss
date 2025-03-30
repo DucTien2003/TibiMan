@@ -91,6 +91,11 @@ $theme-colors: (
   .stroke-#{$name}-hover:hover {
     stroke: rgb($color) !important;
   }
+
+  // Parent hover
+  .parent-hover:hover .#{$name}-parent-hover {
+    color: rgb($color) !important;
+  }
 }
 
 // 0.1	1A

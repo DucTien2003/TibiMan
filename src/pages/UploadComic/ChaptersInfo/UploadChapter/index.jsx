@@ -5,7 +5,7 @@ import UploadBox from "@/components/specific/UploadBox";
 import AppTextFieldInput from "@/components/common/AppTextFieldInput";
 import ModalComponent from "@/components/common/ModalComponent";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
-import { useGetData } from "@/hooks/useGetData";
+import { useGetData, useWindowResize } from "@/hooks";
 import { useAlertStore, alertActions } from "@/store";
 import { useForm, FormProvider } from "react-hook-form";
 import { requiredAcceptSpace, convertImageToFile } from "@/utils";
@@ -22,6 +22,7 @@ function UploadChapter({
   const imagesRef = useRef();
   const resetModalRef = useRef();
   const createModalRef = useRef();
+  const { isMobile } = useWindowResize();
 
   // For form
   const [formControllerData, setFormControllerData] = useState(comicInfo);
@@ -145,53 +146,60 @@ function UploadChapter({
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="mb-4 flex items-center justify-between">
-          <h4 className="font-medium">
-            {chapter.id ? "Cập nhật chương" : "Tạo chương mới"}
-          </h4>
+        <h3 className="mb-3 font-medium">
+          {chapter.id ? "Cập nhật chương" : "Tạo chương mới"}
+        </h3>
 
-          <div className="flex">
+        {/* Main */}
+        <div className="flex flex-col-reverse gap-6 md:flex-col">
+          <div className="flex justify-end gap-3">
             <DefaultButton
-              className="!mr-3 h-12 !rounded-md !px-10 text-lg !font-medium"
+              className="!rounded-md text-lg !font-medium"
               variant="outlined"
               onClick={() => resetModalRef.current.openModal()}>
               Cài lại
             </DefaultButton>
 
             <DefaultButton
-              className="h-12 !rounded-md !px-10 text-lg !font-medium"
+              className="!rounded-md text-lg !font-medium"
               type="submit">
               {chapter.id ? "Cập nhật" : "Tạo chương"}
             </DefaultButton>
           </div>
-        </div>
 
-        <div className="flex gap-2">
-          <div className="w-1/4 min-w-[200px]">
-            <AppTextFieldInput
-              id="numberOrder"
-              name="STT"
-              label="STT"
-              type="number"
-              min={1}
-              required={true}
-              defaultValue={chapter.numberOrder || ""}
-              validate={[requiredAcceptSpace]}
-            />
+          <div>
+            <div className="flex flex-wrap gap-3">
+              <div className="w-full md:w-1/4">
+                <AppTextFieldInput
+                  id="numberOrder"
+                  name="STT"
+                  label="STT"
+                  type="number"
+                  size={isMobile ? "small" : "medium"}
+                  min={1}
+                  required={true}
+                  defaultValue={chapter.numberOrder || ""}
+                  validate={[requiredAcceptSpace]}
+                />
+              </div>
+
+              <div className="flex-1">
+                <AppTextFieldInput
+                  id="chapterName"
+                  name="Tên chương"
+                  label="Tên chương"
+                  size={isMobile ? "small" : "medium"}
+                  required={true}
+                  defaultValue={chapter.name || ""}
+                  validate={[requiredAcceptSpace]}
+                />
+              </div>
+            </div>
+
+            <h5 className="mb-3 mt-5 font-medium">Trang truyện</h5>
+            <UploadBox initialData={imageFiles} ref={imagesRef} />
           </div>
-
-          <AppTextFieldInput
-            id="chapterName"
-            name="Tên truyện"
-            label="Tên truyện"
-            required={true}
-            defaultValue={chapter.name || ""}
-            validate={[requiredAcceptSpace]}
-          />
         </div>
-
-        <h5 className="mb-3 mt-5 font-medium">Trang truyện</h5>
-        <UploadBox initialData={imageFiles} ref={imagesRef} />
       </form>
 
       <ModalComponent

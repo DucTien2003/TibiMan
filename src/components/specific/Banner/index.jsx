@@ -1,28 +1,35 @@
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRef, useEffect, useState } from "react";
+
+import { comicsApi } from "@/api";
+import AppIconButton from "@/components/common/buttons/AppIconButton";
+import Cover from "@/components/common/Cover";
+import { useGetData } from "@/hooks";
+import { comicUrl } from "@/routes";
+import { FaAngleLeft, FaAngleRight } from "@/utils";
 
 import styles from "./banner.module.scss";
-import Cover from "@/components/common/Cover";
-import AppIconButton from "@/components/common/buttons/AppIconButton";
-import { FaAngleRight, FaAngleLeft } from "@/utils";
 
-function Banner({ comics }) {
-  const swiperElRef = useRef(null);
+function Banner() {
+  // States
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [swiperInstance, setSwiperInstance] = useState(null);
 
+  // Functions
   const nextSlide = () => {
-    swiperElRef.current.swiper.slideNext();
+    swiperInstance?.slideNext();
   };
 
   const prevSlide = () => {
-    swiperElRef.current.swiper.slidePrev();
+    swiperInstance?.slidePrev();
   };
 
+  // States functions
   useEffect(() => {
-    const swiperInstance = swiperElRef.current.swiper;
-
     if (!swiperInstance) return;
 
     const updateCurrentSlide = () => {
@@ -34,17 +41,33 @@ function Banner({ comics }) {
     return () => {
       swiperInstance.off("slideChange", updateCurrentSlide);
     };
-  }, []);
+  }, [swiperInstance]);
+
+  // Hooks
+  const staticApis = useMemo(
+    () => [{ url: comicsApi(), query: { limit: 5, orderBy: "views" } }],
+    []
+  );
+
+  const staticResponse = useGetData(staticApis);
+
+  if (staticResponse.loading || staticResponse.error) {
+    return (
+      <h2 className="mt-16 w-full text-center">
+        {staticResponse.error || "Loading..."}
+      </h2>
+    );
+  }
+
+  const [mostPopularComics] = staticResponse.responseData || [];
 
   return (
     <div className="relative">
       {/* Title */}
-      <h2 className="absolute left-4 z-30 mt-14 font-medium">
-        Popular New Titles
-      </h2>
+      <h2 className="absolute left-4 z-30 mt-14 font-medium">Truyện hot</h2>
 
       {/* Swiper control */}
-      <div className="absolute bottom-3 right-4 z-20">
+      <div className="absolute bottom-3 right-4 z-20 hidden md:block">
         <div className="flex items-center">
           {/* Number order */}
           <span className="theme-primary-text mr-2 mt-1 font-semibold uppercase">
@@ -66,15 +89,15 @@ function Banner({ comics }) {
       {/* Swiper */}
       <Swiper
         id="swiper"
-        ref={swiperElRef}
+        onSwiper={(swiper) => setSwiperInstance(swiper)}
         loop={true}
         speed={500}
         autoplay={{
           delay: 2500,
-          disableOnInteraction: false,
+          // disableOnInteraction: false,
         }}
         modules={[Autoplay]}>
-        {comics.map((swiperItem, index) => {
+        {mostPopularComics.comics.map((swiperItem, index) => {
           return (
             <SwiperSlide key={index}>
               <div
@@ -93,41 +116,34 @@ function Banner({ comics }) {
                 {/* Swiper content */}
                 <div className="container z-40 flex flex-col">
                   <div className="w-full">
-                    <div className="my-5 flex">
+                    <Link to={comicUrl(swiperItem.id)} className="my-5 flex">
                       {/* Cover */}
-                      <div className="w-1/4 max-w-[215px] shadow-lg">
+                      <div className="w-1/4 min-w-[112px] max-w-[215px] shadow-lg">
                         <Cover comic={swiperItem} />
                       </div>
 
                       {/* Info */}
                       <div className="ml-4 flex flex-1 flex-col">
                         {/* Name */}
-                        <h1 className="font-black">{swiperItem.name}</h1>
-
-                        {/* Categories */}
-                        {/* <div className="text-mini flex flex-wrap items-center py-4 font-semibold">
-                          {swiperItem.categories.map((category) => (
-                            <span
-                              key={category}
-                              className="theme-primary-bg mr-2 rounded bg-white p-1 text-white">
-                              {category}
-                            </span>
-                          ))}
-                        </div> */}
+                        <h1 className="limit-line-1 text-sm font-black md:text-lg">
+                          {swiperItem.name}
+                        </h1>
 
                         {/* Description */}
-                        <div className="flex-1">
-                          <p key={index} className="limit-line-7">
+                        <div className="mt-3 flex-1 md:mt-4">
+                          <p
+                            key={index}
+                            className="limit-line-7 limit-line-4-md">
                             {swiperItem.description}
                           </p>
                         </div>
 
                         {/* Author, Artist */}
-                        <span className="font-semibold italic">
+                        <span className="limit-line-1-md font-semibold italic">
                           {swiperItem.author}
                         </span>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
 

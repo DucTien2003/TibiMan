@@ -1,31 +1,63 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
-import DetailCard from '@/components/common/cards/DetailCard';
-import GenresSelector from '@/components/specific/GenresSelector';
-import PaginationComponent from '@/components/specific/PaginationComponent';
-import { homeUrl } from '@/routes';
-import { FaArrowLeft } from '@/utils';
-import { latestUpdates } from '@/api/comicList';
+import { comicsApi } from "@/api";
+import DetailCard from "@/components/common/cards/DetailCard";
+import GenresSelector from "@/components/specific/GenresSelector";
+import PaginationComponent from "@/components/specific/PaginationComponent";
+import { useGetData } from "@/hooks";
+import { homeUrl } from "@/routes";
+import { FaArrowLeft } from "@/utils";
 
 const NUMBER_OF_COMICS_PER_PAGE = 18;
 
 function ComicList() {
+  // States
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataRender, setDataRender] = useState([]);
 
+  // Hooks
+  const [params, setSearchParams] = useSearchParams();
+
+  // variables
+  const orderBy = params.get("orderBy") || "orderBy";
+  const page = params.get("page") || 1;
+
+  // Functions
   const handlePageChange = (event, value) => {
+    setSearchParams({
+      page: value,
+      orderBy,
+    });
     setCurrentPage(value);
   };
 
-  useEffect(() => {
-    setDataRender(
-      latestUpdates.slice(
-        (currentPage - 1) * NUMBER_OF_COMICS_PER_PAGE,
-        currentPage * NUMBER_OF_COMICS_PER_PAGE
-      )
+  //  Hooks
+  const staticApis = useMemo(
+    () => [
+      {
+        url: comicsApi(),
+        query: {
+          page,
+          limit: NUMBER_OF_COMICS_PER_PAGE,
+          orderBy,
+          sortType: "DESC",
+        },
+      },
+    ],
+    [page, orderBy]
+  );
+
+  const staticResponse = useGetData(staticApis);
+
+  if (staticResponse.loading || staticResponse.error) {
+    return (
+      <h2 className="mt-16 w-full text-center">
+        {staticResponse.error || "Loading..."}
+      </h2>
     );
-  }, [currentPage]);
+  }
+
+  const [comics] = staticResponse.responseData || [];
 
   return (
     <div className="my-20">
@@ -48,7 +80,7 @@ function ComicList() {
 
         {/* Display */}
         <div className="mt-10 grid grid-cols-6 gap-5 pb-12">
-          {dataRender.map((comic, index) => {
+          {comics.comics.map((comic, index) => {
             return (
               <div key={index}>
                 <DetailCard comic={comic} />
@@ -61,8 +93,9 @@ function ComicList() {
         <div className="flex w-full justify-center">
           <PaginationComponent
             size="large"
+            currentPage={currentPage}
             itemPerPage={NUMBER_OF_COMICS_PER_PAGE}
-            list={latestUpdates}
+            count={comics.count}
             handlePageChange={handlePageChange}
           />
         </div>
