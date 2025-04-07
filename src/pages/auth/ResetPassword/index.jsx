@@ -1,15 +1,14 @@
 import { Fragment } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
 
+import { resetPasswordApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
 import AppInput from "@/components/common/AppInput";
-
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { loginUrl } from "@/routes";
-import { resetPasswordApi } from "@/api";
-import { useAlertStore, alertActions } from "@/store";
-import { FaAnglesLeft, required, minLength } from "@/utils";
+import { alertActions, useAlertStore } from "@/store";
+import { FaAnglesLeft, minLength, required } from "@/utils";
 
 function ResetPassword() {
   // For form
@@ -52,7 +51,7 @@ function ResetPassword() {
 
   return (
     <Fragment>
-      <div className="px-8">
+      <div className="px-4 md:px-8">
         <h4 className="mb-4 text-center font-semibold">Reset password</h4>
 
         {/* Form */}

@@ -1,7 +1,7 @@
-@use '/src/assets/styles/variables.scss' as *;
+@use "/src/assets/styles/variables.scss" as *;
 
 .auth-bg {
-  background-image: url('https://auth.mangadex.org/resources/7gfd6/login/mangadex/img/mdex-login-key.png');
+  background-image: url("https://auth.mangadex.org/resources/7gfd6/login/mangadex/img/mdex-login-key.png");
   background-repeat: no-repeat;
   background-position-x: -70px;
   background-position-y: 125px;
@@ -14,7 +14,6 @@
 }
 
 .auth-container {
-  min-width: 500px;
   background: #212328;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;

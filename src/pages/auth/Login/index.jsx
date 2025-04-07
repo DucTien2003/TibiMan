@@ -1,21 +1,20 @@
 import clsx from "clsx";
-import axiosRequest from "@/api/axiosRequest";
 import { Fragment } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
-
-import AppInput from "@/components/common/AppInput";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
 
 import { loginApi } from "@/api";
+import axiosRequest from "@/api/axiosRequest";
+import AppInput from "@/components/common/AppInput";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { forgotPasswordUrl, registerUrl } from "@/routes";
-import { required, minLength } from "@/utils";
 import {
-  useAlertStore,
   alertActions,
-  useAuthStore,
   authActions,
+  useAlertStore,
+  useAuthStore,
 } from "@/store";
+import { minLength, required } from "@/utils";
 
 function Login() {
   const navigate = useNavigate();
@@ -64,7 +63,7 @@ function Login() {
 
   return (
     <Fragment>
-      <div className="px-8">
+      <div className="px-4 md:px-8">
         <h4 className="mb-4 text-center font-semibold">
           Sign in to your account
         </h4>

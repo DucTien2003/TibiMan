@@ -1,23 +1,28 @@
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import clsx from "clsx";
+import { Link } from "react-router-dom";
 
-import styles from './authLayout.module.scss';
-import { homeUrl } from '@/routes';
+import { homeUrl } from "@/routes";
+
+import styles from "./authLayout.module.scss";
 
 function AuthLayout({ children }) {
   return (
     <div
       className={clsx(
-        styles['auth-bg'],
-        'min-w-screen font-league-spartan flex min-h-screen items-center justify-center bg-black text-white'
+        styles["auth-bg"],
+        "font-league-spartan flex min-h-screen items-center justify-center bg-black text-white"
       )}>
-      <div className={clsx(styles['auth-container'])}>
+      <div
+        className={clsx(
+          styles["auth-container"],
+          "w-[500px] max-w-full max-sm:mx-2"
+        )}>
         <div className="my-4 flex justify-center">
           <Link
             to={homeUrl()}
             className={clsx(
-              styles['logo'],
-              'flex items-center justify-center hover:underline'
+              styles["logo"],
+              "flex items-center justify-center hover:underline"
             )}>
             <img
               src="https://mangadex.org/favicon.svg"

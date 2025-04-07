@@ -19,18 +19,14 @@ function Home() {
     []
   );
 
-  const staticResponse = useGetData(staticApis);
+  const { loading, error, responseData } = useGetData(staticApis);
+  const [latestUpdateComics, recentlyAddedComics] = responseData || [];
 
-  if (staticResponse.loading || staticResponse.error) {
+  if (loading || error) {
     return (
-      <h2 className="mt-16 w-full text-center">
-        {staticResponse.error || "Loading..."}
-      </h2>
+      <h2 className="mt-16 w-full text-center">{error || "Loading..."}</h2>
     );
   }
-
-  const [latestUpdateComics, recentlyAddedComics] =
-    staticResponse.responseData || [];
 
   return (
     <div>

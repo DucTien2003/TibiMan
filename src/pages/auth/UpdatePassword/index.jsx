@@ -1,9 +1,9 @@
-import { Fragment } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { Fragment } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-import AppInput from '@/components/common/AppInput';
-import DefaultButton from '@/components/common/buttons/DefaultButton';
-import { required, minLength } from '@/utils';
+import AppInput from "@/components/common/AppInput";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import { minLength, required } from "@/utils";
 
 function ResetPassword() {
   // For form
@@ -16,7 +16,7 @@ function ResetPassword() {
 
   return (
     <Fragment>
-      <div className="rounded px-8 pb-8">
+      <div className="rounded px-4 pb-8 md:px-8">
         <h4 className="mb-4 text-center font-semibold">Update password</h4>
 
         <FormProvider {...methods}>

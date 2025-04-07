@@ -1,7 +1,7 @@
 import Tooltip from "@mui/material/Tooltip";
 import clsx from "clsx";
 import { useMemo, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { comicsIdApi, usersMyComicsApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
@@ -9,6 +9,7 @@ import AppIconButton from "@/components/common/buttons/AppIconButton";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import Cover from "@/components/common/Cover";
 import ModalComponent from "@/components/common/ModalComponent";
+import PaginationComponent from "@/components/specific/PaginationComponent";
 import { useGetData } from "@/hooks";
 import { comicUrl, detailComicUrl, uploadComicUrl } from "@/routes";
 import { alertActions, useAlertStore } from "@/store";
@@ -25,23 +26,23 @@ import {
   timeStandard,
 } from "@/utils";
 
+const NUMBER_OF_COMICS_PER_PAGE = 18;
+
 function MyUpload() {
+  // Hooks
   const navigate = useNavigate();
+  const [, alertDispatch] = useAlertStore();
+  const [params, setSearchParams] = useSearchParams();
+
+  // States
+  const deleteModalRef = useRef();
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedDeleteComic, setSelectedDeleteComic] = useState(null);
 
-  const deleteModalRef = useRef();
-  const [, alertDispatch] = useAlertStore();
+  // Variables
+  const page = params.get("page") || 1;
 
-  const staticApis = useMemo(
-    () => [
-      {
-        url: usersMyComicsApi(),
-        query: { orderBy: "created_at", sortType: "ASC" },
-      },
-    ],
-    []
-  );
-
+  // Functions
   const handleBack = () => {
     navigate(-1);
   };
@@ -72,21 +73,38 @@ function MyUpload() {
     }
   };
 
-  const staticResponse = useGetData(staticApis);
+  const handlePageChange = (event, value) => {
+    setSearchParams({
+      page: value,
+    });
+    setCurrentPage(value);
+  };
 
-  if (staticResponse.loading) {
-    return <h2 className="mt-16 w-full text-center">Loading...</h2>;
-  }
+  const staticApis = useMemo(
+    () => [
+      {
+        url: usersMyComicsApi(),
+        query: {
+          page,
+          sortType: "DESC",
+          orderBy: "created_at",
+          limit: NUMBER_OF_COMICS_PER_PAGE,
+        },
+      },
+    ],
+    [page]
+  );
+  const { loading, error, responseData } = useGetData(staticApis);
 
-  if (staticResponse.error) {
+  const [listComics] = responseData;
+
+  if (loading || error) {
     return (
       <h2 className="mt-16 w-full text-center">
-        Error: {staticResponse.error}
+        {error ? `Error: ${error}` : "Loading..."}
       </h2>
     );
   }
-
-  const [{ comics: listComics }] = staticResponse.responseData;
 
   return (
     <div className="relative mb-10 mt-20">
@@ -108,8 +126,9 @@ function MyUpload() {
           </Link>
         </div>
 
+        {/* List Comics */}
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-          {listComics.map((comic) => (
+          {listComics.comics.map((comic) => (
             <div
               key={comic.id}
               className="flex gap-3 rounded border border-gray-200 p-2">
@@ -209,6 +228,18 @@ function MyUpload() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Pagination */}
+        {/* Pagination */}
+        <div className="mt-6 flex w-full justify-center">
+          <PaginationComponent
+            size="large"
+            currentPage={currentPage}
+            itemPerPage={NUMBER_OF_COMICS_PER_PAGE}
+            count={listComics.count}
+            handlePageChange={handlePageChange}
+          />
         </div>
       </div>
 

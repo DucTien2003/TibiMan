@@ -20,6 +20,8 @@
 
 // Chapter selector
 .MuiList-root.MuiList-padding.MuiMenu-list {
+  max-height: 450px;
+
   .MuiButtonBase-root {
     padding: 0;
   }
@@ -27,7 +29,11 @@
 
 #status-selector,
 #chapter-selector {
-  padding: 11.5px 14px;
+  @media screen and (min-width: 768px) {
+    padding: 11.5px 14px;
+  }
+
+  padding: 8px 14px;
 
   a,
   span {

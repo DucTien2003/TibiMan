@@ -1,18 +1,17 @@
+import { FormProvider, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
 
+import { registerApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
 import AppInput from "@/components/common/AppInput";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
-
 import { loginUrl } from "@/routes";
-import { registerApi } from "@/api";
-import { useAlertStore, alertActions } from "@/store";
+import { alertActions, useAlertStore } from "@/store";
 import {
-  required,
   minLength,
-  requiredEmail,
   onlyDigitsAndLetters,
+  required,
+  requiredEmail,
 } from "@/utils";
 
 function Register() {
@@ -54,44 +53,10 @@ function Register() {
         });
       }
     }
-
-    // await axiosCustom()
-    //   .post(registerApi(), {
-    //     username: data.username,
-    //     password: data.password,
-    //     email: data.email,
-    //   })
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       navigate("/login");
-
-    //       alertDispatch(
-    //         alertActions.showAlert(response.data.message, "success")
-    //       );
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     if (error.response.status === 500) {
-    //       alertDispatch(
-    //         alertActions.showAlert(error.response.data.message, "error")
-    //       );
-    //       return;
-    //     }
-
-    //     const errorData = error.response.data.data;
-    //     if (errorData.errors.length > 0) {
-    //       errorData.errors.forEach((err) => {
-    //         setError(err.field, {
-    //           type: "manual",
-    //           message: err.message,
-    //         });
-    //       });
-    //     }
-    //   });
   };
 
   return (
-    <div className="px-8">
+    <div className="px-4 md:px-8">
       <h4 className="mb-4 text-center font-semibold">Create your account</h4>
 
       <FormProvider {...methods}>

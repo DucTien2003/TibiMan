@@ -39,20 +39,17 @@ function Comic() {
     [comicId]
   );
 
-  const staticResponse = useGetData(staticApis);
+  const { loading, error, responseData } = useGetData(staticApis);
+  const [comicInfo, listChapters] = responseData;
 
-  if (staticResponse.loading || staticResponse.error) {
+  const firstChapter = listChapters?.chapters[0];
+  const lastChapter = listChapters?.chapters[listChapters.chapters.length - 1];
+
+  if (loading || error) {
     return (
-      <h2 className="mt-16 w-full text-center">
-        {staticResponse.error ? `Error: ${staticResponse.error}` : "Loading..."}
-      </h2>
+      <h2 className="mt-16 w-full text-center">{error || "Loading..."}</h2>
     );
   }
-
-  const [comicInfo, listChapters] = staticResponse.responseData;
-
-  const firstChapter = listChapters.chapters[0];
-  const lastChapter = listChapters.chapters[listChapters.chapters.length - 1];
 
   return (
     <div className="mb-10">

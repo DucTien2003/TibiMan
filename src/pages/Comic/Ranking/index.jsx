@@ -44,14 +44,14 @@ export default function Ranking() {
     []
   );
 
-  const staticResponse = useGetData(staticApis);
+  const { loading, error, responseData } = useGetData(staticApis);
+  const [comicsOfDay, comicsOfMonth, topComics] = responseData || [];
 
-  if (staticResponse.error || staticResponse.loading) {
-    return;
+  if (loading || error) {
+    return (
+      <h2 className="mt-16 w-full text-center">{error || "Loading..."}</h2>
+    );
   }
-
-  const [comicsOfDay, comicsOfMonth, topComics] =
-    staticResponse.responseData || [];
 
   const rankData = [
     { comics: comicsOfDay.comics, title: "Top ngày", value: "day" },

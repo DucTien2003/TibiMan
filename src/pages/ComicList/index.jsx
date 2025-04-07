@@ -47,17 +47,14 @@ function ComicList() {
     [page, orderBy]
   );
 
-  const staticResponse = useGetData(staticApis);
+  const { loading, error, responseData } = useGetData(staticApis);
+  const [comics] = responseData || [];
 
-  if (staticResponse.loading || staticResponse.error) {
+  if (loading || error) {
     return (
-      <h2 className="mt-16 w-full text-center">
-        {staticResponse.error || "Loading..."}
-      </h2>
+      <h2 className="mt-16 w-full text-center">{error || "Loading..."}</h2>
     );
   }
-
-  const [comics] = staticResponse.responseData || [];
 
   return (
     <div className="my-20">
@@ -71,15 +68,15 @@ function ComicList() {
         </Link>
 
         {/* Filter */}
-        <div className="mt-10 flex items-center justify-between">
+        <div className="mt-6 flex flex-col justify-between gap-2 md:mt-10 md:flex-row md:items-center">
           <h1 className="theme-primary-text">Comic list</h1>
-          <div className="w-[400px]">
+          <div className="w-[400px] max-w-full">
             <GenresSelector id="filter" label="Filter" />
           </div>
         </div>
 
         {/* Display */}
-        <div className="mt-10 grid grid-cols-6 gap-5 pb-12">
+        <div className="mt-10 grid grid-cols-2 gap-3 pb-12 md:grid-cols-4 md:gap-5 lg:grid-cols-6">
           {comics.comics.map((comic, index) => {
             return (
               <div key={index}>
