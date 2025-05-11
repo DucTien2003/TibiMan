@@ -15,7 +15,6 @@ import {
   timeAgo,
 } from "@/utils";
 
-import styles from "./comic.module.scss";
 import ComicInfoOnMobile from "./ComicInfoOnMobile";
 import ComicInfoOnPc from "./ComicInfoOnPc";
 import Description from "./Description";
@@ -54,39 +53,40 @@ function Comic() {
   return (
     <div className="mb-10">
       {/* Banner */}
-      <div className="">
+      <div
+        className={clsx("relative w-full bg-cover bg-no-repeat md:mb-[150px]")}>
+        {/* Overlay */}
         <div
-          style={{ backgroundImage: `url(${comicInfo.comic.cover})` }}
-          className={clsx(
-            styles["banner-bg"],
-            "relative mb-[80px] max-h-[250px] w-full bg-cover bg-no-repeat md:mb-[150px] md:max-h-[350px]"
-          )}>
-          {/* Overlay */}
-          <div
-            className={clsx(
-              styles["banner-overlay"],
-              "absolute inset-0"
-            )}></div>
+          style={{
+            background: `
+              linear-gradient(67.81deg, rgba(0, 0, 0, 0.64) 35.51%, transparent),
+              url(${comicInfo.comic.cover})
+            `,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            filter: "blur(2px)",
+            backgroundPosition: "center 15%",
+          }}
+          className="absolute inset-0 h-[250px] md:h-[350px]"></div>
 
-          {/* Comic info */}
-          {isMobile ? (
-            <ComicInfoOnMobile
-              comicInfo={comicInfo.comic}
-              lastChapter={lastChapter}
-              firstChapter={firstChapter}
-            />
-          ) : (
-            <ComicInfoOnPc
-              comicInfo={comicInfo.comic}
-              lastChapter={lastChapter}
-              firstChapter={firstChapter}
-            />
-          )}
-        </div>
+        {/* Comic info */}
+        {isMobile ? (
+          <ComicInfoOnMobile
+            comicInfo={comicInfo.comic}
+            lastChapter={lastChapter}
+            firstChapter={firstChapter}
+          />
+        ) : (
+          <ComicInfoOnPc
+            comicInfo={comicInfo.comic}
+            lastChapter={lastChapter}
+            firstChapter={firstChapter}
+          />
+        )}
       </div>
 
       {/* Detail */}
-      <div className="container flex flex-col pt-96 md:pt-20">
+      <div className="container flex flex-col">
         {/* Description */}
         <div className="my-10 flex flex-col">
           <h4 className="theme-border-border mb-3 border-b pb-1 font-medium">

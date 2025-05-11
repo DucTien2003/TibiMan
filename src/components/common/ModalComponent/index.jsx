@@ -1,10 +1,10 @@
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 
-import { IoClose } from "@/utils";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
 import AppIconButton from "@/components/common/buttons/AppIconButton";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import { IoClose } from "@/utils";
 
 function ModalComponent(
   {

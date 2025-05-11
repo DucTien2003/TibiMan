@@ -1,25 +1,23 @@
 import { useEffect } from "react";
 import { useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import { usersMyComicsApi } from "@/api";
+import { comicsApi } from "@/api";
 import BackTitle from "@/components/common/buttons/BackTitle";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
 import InfoCard from "@/components/common/cards/InfoCard";
 import FilterForm from "@/components/specific/FilterForm";
 import PaginationComponent from "@/components/specific/PaginationComponent";
 import { useGetData } from "@/hooks";
-import { uploadComicUrl } from "@/routes";
-import { FiUpload, getUrlParams } from "@/utils";
+import { getUrlParams } from "@/utils";
 
 const NUMBER_OF_COMICS_PER_PAGE = 18;
 
-function MyUpload() {
+function SearchResult() {
   // Hooks
   const [params, setSearchParams] = useSearchParams();
 
   // Variables
-  const { page, order, status, genres, orderBy } = getUrlParams(params);
+  const { search, page, order, status, genres, orderBy } = getUrlParams(params);
 
   // States
   const [currentPage, setCurrentPage] = useState(Number(page));
@@ -42,9 +40,10 @@ function MyUpload() {
   const staticApis = useMemo(
     () => [
       {
-        url: usersMyComicsApi(),
+        url: comicsApi(),
         query: {
           page,
+          search,
           status,
           orderBy,
           order: order,
@@ -53,7 +52,7 @@ function MyUpload() {
         },
       },
     ],
-    [page, orderBy, order, status, genres]
+    [search, page, orderBy, order, status, genres]
   );
 
   const { loading, error, responseData } = useGetData(staticApis);
@@ -71,23 +70,15 @@ function MyUpload() {
     <div className="relative mb-10 mt-20">
       <div className="container">
         {/* Back */}
-        <BackTitle title="Truyện của tôi" />
+        <BackTitle title={`Tìm kiếm: "${search}"`} />
 
-        <FilterForm>
-          <Link to={uploadComicUrl()}>
-            <DefaultButton
-              hoverColor="primary.contrastText"
-              className="flex items-center gap-2 !rounded-md">
-              <FiUpload />
-              <span>Upload</span>
-            </DefaultButton>
-          </Link>
-        </FilterForm>
+        {/* Filter */}
+        <FilterForm />
 
         {/* List Comics */}
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           {listComics.comics.map((comic) => (
-            <InfoCard key={comic.id} comic={comic} />
+            <InfoCard key={comic.id} comic={comic} isUser={true} />
           ))}
         </div>
 
@@ -106,4 +97,4 @@ function MyUpload() {
   );
 }
 
-export default MyUpload;
+export default SearchResult;

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Fragment } from "react";
 import { format } from "date-fns";
+import { Fragment } from "react";
 
 const extend = Object.assign;
 
@@ -158,21 +158,40 @@ const handleStatusComic = (status) => {
   }
 };
 
+const getUrlParams = (params) => {
+  const page = params.get("page") || 1;
+  const genres = params.get("genres") || "";
+  const search = params.get("search") || "";
+  const order = params.get("order") || "DESC";
+  const status = params.get("status") || "all";
+  const orderBy = params.get("orderBy") || "updated_at";
+
+  return {
+    page: Number(page),
+    order,
+    search,
+    status,
+    genres,
+    orderBy,
+  };
+};
+
 export {
-  extend,
   addZero,
-  isEmpty,
-  timeAgo,
-  hexToRgb,
   breakLine,
-  formatPath,
-  reverseArray,
-  timeStandard,
-  showQuantity,
-  removeEndSlash,
-  capitalizeWords,
-  sortByLastNumber,
-  convertImageToFile,
   capitalizeFirstLetter,
+  capitalizeWords,
+  convertImageToFile,
+  extend,
+  formatPath,
+  getUrlParams,
   handleStatusComic,
+  hexToRgb,
+  isEmpty,
+  removeEndSlash,
+  reverseArray,
+  showQuantity,
+  sortByLastNumber,
+  timeAgo,
+  timeStandard,
 };

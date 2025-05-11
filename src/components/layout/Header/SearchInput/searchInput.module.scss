@@ -1,19 +1,7 @@
 @use "/src/assets/styles/variables.scss" as *;
 
-.search-form {
-  z-index: 30;
-}
-
 .search-input {
-  width: 300px;
-  background-color: var(--scrollbar-color);
-  padding: 4px 15px;
+  padding: 4px 32px 4px 15px;
   border: 1px solid transparent;
-  border-radius: 8px;
   transition: width 0.15s ease-out;
-
-  &:focus {
-    width: 100%;
-    border: 1px solid var(--theme-primary);
-  }
 }

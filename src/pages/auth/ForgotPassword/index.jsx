@@ -1,13 +1,13 @@
 import { Fragment } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
 
-import axiosCustom from "@/api/axiosRequest";
-import AppInput from "@/components/common/AppInput";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
-import { loginUrl } from "@/routes";
 import { forgotPasswordApi } from "@/api";
-import { useAlertStore, alertActions } from "@/store";
+import axiosCustom from "@/api/axiosRequest";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import AppInput from "@/components/common/form/AppInput";
+import { loginUrl } from "@/routes";
+import { alertActions, useAlertStore } from "@/store";
 import { FaAnglesLeft, required, requiredEmail } from "@/utils";
 
 function ForgotPassword() {

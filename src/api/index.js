@@ -13,6 +13,7 @@ export const usersIdComicsApi = (userId) => `/users/${userId}/comics`;
 
 // Comic
 export const comicsApi = () => `/comics`;
+export const comicsBookmarkApi = () => `/comics/bookmark`;
 export const comicsIdApi = (comicId) => `/comics/${comicId}`;
 export const comicsIdRatingApi = (comicId) => `/comics/${comicId}/rating`;
 export const comicsIdChaptersApi = (comicId) => `/comics/${comicId}/chapters`;

@@ -24,7 +24,7 @@ export default function ComicInfoOnMobile({
   firstChapter,
 }) {
   return (
-    <div className="container relative translate-y-[20%]">
+    <div className="container relative pt-[80px]">
       <div className="flex flex-col items-center justify-center">
         {/* Cover */}
         <div className="mb-2 max-w-[200px] shadow-lg">
@@ -36,7 +36,7 @@ export default function ComicInfoOnMobile({
           <h1 className="font-bold">{comicInfo.name}</h1>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-2">
+        <div className="mt-4 flex items-center justify-center gap-2">
           <BookMarkBtn comicInfo={comicInfo} />
           <Rating
             comicId={comicInfo.id}
@@ -78,16 +78,20 @@ export default function ComicInfoOnMobile({
           </div>
 
           {/* Author - Artist */}
-          <div className="flex items-center">
-            <FaPaintBrush className="text-sm" />
-            <p className="ml-1 w-[100px]">Tác giả:</p>
+          <div className="flex">
+            <div>
+              <div className="flex items-center">
+                <FaPaintBrush className="text-sm" />
+                <p className="ml-1 min-w-[80px]">Tác giả:</p>
+              </div>
+            </div>
             <p className="font-medium">{comicInfo.author || "Đang cập nhật"}</p>
           </div>
 
           {/* Translator */}
           <div className="flex items-center">
             <MdOutlineTranslate className="text-sm" />
-            <p className="ml-1 w-[100px]">Dịch giả:</p>
+            <p className="ml-1 w-[80px]">Dịch giả:</p>
             <p className="font-medium">
               {comicInfo.translator || "Đang cập nhật"}
             </p>
@@ -101,7 +105,7 @@ export default function ComicInfoOnMobile({
                 "text-sm"
               )}
             />
-            <p className="ml-1 w-[100px]">Tình trạng:</p>
+            <p className="ml-1 w-[80px]">Tình trạng:</p>
             <p className="font-medium">
               {handleStatusComic(comicInfo.status).text || "Đang cập nhật"}
             </p>

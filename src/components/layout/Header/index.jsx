@@ -1,16 +1,16 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 
-import UserMenu from "./UserMenu";
-import ThemeMode from "./ThemeMode";
-import SearchInput from "./SearchInput";
-import styles from "./header.module.scss";
 import logo from "@/assets/images/logo.png";
 import AppIconButton from "@/components/common/buttons/AppIconButton";
-import { homeUrl } from "@/routes";
-import { MenuIcon } from "@/utils/icon";
 import { useWindowScroll } from "@/hooks";
-import { useSideBarStore, sideBarActions } from "@/store";
+import { homeUrl } from "@/routes";
+import { sideBarActions, useSideBarStore } from "@/store";
+import { MenuIcon } from "@/utils/icon";
+
+import styles from "./header.module.scss";
+import SearchInput from "./SearchInput";
+import UserMenu from "./UserMenu";
 
 function Header({ isAbsolute = false }) {
   const isTop = useWindowScroll();
@@ -59,9 +59,6 @@ function Header({ isAbsolute = false }) {
             <div className="hidden flex-1 justify-end md:flex">
               <SearchInput />
             </div>
-
-            {/* Theme mode */}
-            <ThemeMode />
 
             {/* User menu */}
             <UserMenu />

@@ -1,15 +1,15 @@
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-import axiosRequest from "@/api/axiosRequest";
-import UploadBox from "@/components/specific/UploadBox";
-import AppTextFieldInput from "@/components/common/AppTextFieldInput";
-import ModalComponent from "@/components/common/ModalComponent";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
-import { useGetData, useWindowResize } from "@/hooks";
-import { useAlertStore, alertActions } from "@/store";
-import { useForm, FormProvider } from "react-hook-form";
-import { requiredAcceptSpace, convertImageToFile } from "@/utils";
 import { chaptersApi, chaptersIdApi, chaptersIdImagesApi } from "@/api";
+import axiosRequest from "@/api/axiosRequest";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import AppTextFieldInput from "@/components/common/form/AppTextFieldInput";
+import ModalComponent from "@/components/common/ModalComponent";
+import UploadBox from "@/components/specific/UploadBox";
+import { useGetData, useWindowResize } from "@/hooks";
+import { alertActions, useAlertStore } from "@/store";
+import { convertImageToFile, requiredAcceptSpace } from "@/utils";
 
 function UploadChapter({
   chapter = {},
@@ -35,7 +35,7 @@ function UploadChapter({
     () => [
       {
         url: chaptersIdImagesApi(chapter.id),
-        query: { orderBy: "number_order", sortType: "ASC" },
+        query: { orderBy: "number_order", order: "ASC" },
       },
     ],
     [chapter.id]

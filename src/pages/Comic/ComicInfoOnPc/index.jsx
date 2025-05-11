@@ -85,9 +85,13 @@ export default function ComicInfoOnPc({
           {/* Info */}
           <div className="my-5 flex flex-col gap-1">
             {/* Author - Artist */}
-            <div className="flex items-center">
-              <FaPaintBrush className="text-sm" />
-              <span className="ml-1 w-[100px]">Tác giả:</span>
+            <div className="flex">
+              <div>
+                <div className="flex items-center">
+                  <FaPaintBrush className="text-sm" />
+                  <span className="ml-1 min-w-[90px]">Tác giả:</span>
+                </div>
+              </div>
               <span className="font-medium">
                 {comicInfo.author || "Đang cập nhật"}
               </span>
@@ -96,7 +100,7 @@ export default function ComicInfoOnPc({
             {/* Translator */}
             <div className="flex items-center">
               <MdOutlineTranslate className="text-sm" />
-              <span className="ml-1 w-[100px]">Dịch giả:</span>
+              <span className="ml-1 w-[90px]">Dịch giả:</span>
               <span className="font-medium">
                 {comicInfo.translator || "Đang cập nhật"}
               </span>
@@ -110,7 +114,7 @@ export default function ComicInfoOnPc({
                   "text-sm"
                 )}
               />
-              <span className="ml-1 w-[100px]">Tình trạng:</span>
+              <span className="ml-1 w-[90px]">Tình trạng:</span>
               <span className="font-medium">
                 {handleStatusComic(comicInfo.status).text || "Đang cập nhật"}
               </span>

@@ -15,7 +15,7 @@ export default function DataTable({ fetchUrl, columns, ...props }) {
   /* eslint-disable no-unused-vars */
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  const [sortType, setSortType] = useState("ASC");
+  const [order, setOrder] = useState("ASC");
   const [orderBy, setOrderBy] = useState("number_order");
 
   // Data
@@ -47,10 +47,10 @@ export default function DataTable({ fetchUrl, columns, ...props }) {
     () => [
       {
         url: fetchUrl,
-        query: { orderBy, sortType, page, limit },
+        query: { orderBy, order, page, limit },
       },
     ],
-    [fetchUrl, orderBy, sortType, page, limit]
+    [fetchUrl, orderBy, order, page, limit]
   );
 
   const { responseData, loading, error } = useGetData(staticApis);

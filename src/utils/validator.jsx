@@ -47,11 +47,11 @@ const confirmPassword = (valuePassword) => {
 };
 
 export {
-  required,
+  confirmPassword,
   minLength,
+  onlyDigitsAndLetters,
+  required,
+  requiredAcceptSpace,
   requiredEmail,
   requiredNumber,
-  confirmPassword,
-  requiredAcceptSpace,
-  onlyDigitsAndLetters,
 };

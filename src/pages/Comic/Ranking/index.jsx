@@ -30,15 +30,15 @@ export default function Ranking() {
     () => [
       {
         url: comicsApi(),
-        query: { limit: 5, orderBy: "views", sortType: "DESC" },
+        query: { limit: 5, orderBy: "views", order: "DESC" },
       },
       {
         url: comicsApi(),
-        query: { limit: 5, orderBy: "views", sortType: "ASC" },
+        query: { limit: 5, orderBy: "views", order: "ASC" },
       },
       {
         url: comicsApi(),
-        query: { limit: 5, orderBy: "views", sortType: "DESC" },
+        query: { limit: 5, orderBy: "views", order: "DESC" },
       },
     ],
     []

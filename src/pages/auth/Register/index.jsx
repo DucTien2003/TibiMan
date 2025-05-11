@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { registerApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
-import AppInput from "@/components/common/AppInput";
+import AppInput from "@/components/common/form/AppInput";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { loginUrl } from "@/routes";
 import { alertActions, useAlertStore } from "@/store";

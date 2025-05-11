@@ -1,21 +1,22 @@
-import DefaultButton from '@/components/common/buttons/DefaultButton';
-import { MdLightMode, MdDarkMode } from '@/utils';
-import { useThemeStore, themeActions } from '@/store';
+import { themeActions, useThemeStore } from "@/store";
+import { MdDarkMode, MdLightMode } from "@/utils";
 
 function ThemeMode() {
   const [themeState, themeDispatch] = useThemeStore();
 
   return (
-    <DefaultButton
-      variant="outlined"
-      className="h-10 w-10 !p-0"
+    <div
+      className="hover-theme-white-20-bg hover-theme-primary-text flex w-full cursor-pointer items-center rounded p-3"
       onClick={() => themeDispatch(themeActions.toggleTheme())}>
-      {themeState.theme === 'light' ? (
-        <MdLightMode size={20} />
-      ) : (
-        <MdDarkMode size={20} />
-      )}
-    </DefaultButton>
+      {/* Theme mode */}
+      <div className="flex items-center gap-2">
+        {themeState.theme === "light" ? <MdLightMode /> : <MdDarkMode />}
+        <span>Mode: </span>
+        <span className="theme-primary-text font-medium">
+          {themeState.theme === "light" ? "Light" : "Dark"}
+        </span>
+      </div>
+    </div>
   );
 }
 

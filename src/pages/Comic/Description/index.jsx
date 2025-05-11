@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const LIMIT_LINE = 6;
 
 function Description({ description }) {
   const [isShowMore, setIsShowMore] = useState(false);
+  const [isOverflow, setIsOverflow] = useState(false);
   const descriptionRef = useRef(null);
 
   const handleShowMore = () => {
@@ -11,13 +12,15 @@ function Description({ description }) {
   };
 
   useEffect(() => {
-    if (
-      descriptionRef.current.clientHeight >
-      descriptionRef.current.lineHeight * LIMIT_LINE
-    ) {
-      setIsShowMore(true);
+    const el = descriptionRef.current;
+    if (!el) return;
+
+    const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
+
+    if (el.clientHeight > lineHeight * LIMIT_LINE) {
+      setIsOverflow(true);
     } else {
-      setIsShowMore(false);
+      setIsOverflow(false);
     }
   }, [description]);
 
@@ -28,11 +31,13 @@ function Description({ description }) {
         className={`${isShowMore ? "" : `limit-line-${LIMIT_LINE}`} transition-all duration-1000`}>
         {description}
       </p>
-      <button
-        onClick={handleShowMore}
-        className="theme-primary-text mt-1 font-medium hover:underline">
-        <p>- {isShowMore ? "Thu gọn" : "Xem thêm"} -</p>
-      </button>
+      {isOverflow && (
+        <button
+          onClick={handleShowMore}
+          className="theme-primary-text mt-1 font-medium hover:underline">
+          <p>- {isShowMore ? "Thu gọn" : "Xem thêm"} -</p>
+        </button>
+      )}
     </div>
   );
 }

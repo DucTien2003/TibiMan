@@ -3,10 +3,10 @@ import { Fragment, useState } from "react";
 
 import userAvatar1 from "@/assets/images/user-avatar-1.png";
 import {
-  timeAgo,
-  FaRegComment,
-  AiOutlineLike,
   AiOutlineDislike,
+  AiOutlineLike,
+  FaRegComment,
+  timeAgo,
 } from "@/utils";
 
 function ReplyItem({ reply, handleLike, handleDislike, handleShowReplyInput }) {
@@ -61,7 +61,7 @@ function ReplyItem({ reply, handleLike, handleDislike, handleShowReplyInput }) {
               )}
               onClick={() => handleShowReplyInput(reply.rightValue)}>
               <FaRegComment className="mr-1" />
-              <span className="text-xs">Reply</span>
+              <span className="text-xs">Trả lời</span>
             </div>
             <div className="ml-3 text-xs">{timeAgo(reply.createdAt)}</div>
           </div>

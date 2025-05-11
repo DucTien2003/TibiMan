@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { homeUrl } from "@/routes";
 import {
-  FaPhoneAlt,
   FaFacebook,
+  FaPhoneAlt,
   MdOutlineEmail,
   MdOutlinePrivacyTip,
 } from "@/utils";

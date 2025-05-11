@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import AppInput from "@/components/common/AppInput";
+import AppInput from "@/components/common/form/AppInput";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { minLength, required } from "@/utils";
 

@@ -1,22 +1,23 @@
 import clsx from "clsx";
-import { useState, useRef, useEffect } from "react";
+import { useEffect,useRef, useState } from "react";
 
-import ReplyItem from "./ReplyItem";
+import {
+  commentIdCommentRepliesApi,
+  commentIdLikeDislikeApi,
+  commentReplyApi,
+} from "@/api";
 import axiosRequest from "@/api/axiosRequest";
 import userAvatar1 from "@/assets/images/user-avatar-1.png";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
 import { useAuthStore } from "@/store";
 import {
-  commentIdCommentRepliesApi,
-  commentReplyApi,
-  commentIdLikeDislikeApi,
-} from "@/api";
-import {
-  timeAgo,
-  FaRegComment,
-  AiOutlineLike,
   AiOutlineDislike,
+  AiOutlineLike,
+  FaRegComment,
+  timeAgo,
 } from "@/utils";
+
+import ReplyItem from "./ReplyItem";
 
 function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
   const replyInputRef = useRef(null);
@@ -177,7 +178,7 @@ function CommentItem({ comment, comicId, isLogin, handleGetListComments }) {
               )}
               onClick={() => handleShowReplyInput(commentInfo.rightValue)}>
               <FaRegComment className="" />
-              <span className="text-xs">Reply</span>
+              <span className="text-xs">Trả lời</span>
             </div>
             <div className="ml-3 text-xs">{timeAgo(commentInfo.createdAt)}</div>
           </div>

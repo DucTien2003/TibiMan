@@ -8,10 +8,13 @@ import Chapter from "@/pages/Chapter";
 import Comic from "@/pages/Comic";
 import ComicList from "@/pages/ComicList";
 import Home from "@/pages/Home";
+import MyBookmark from "@/pages/MyBookmark";
 import MyUpload from "@/pages/MyUpload";
+import SearchResult from "@/pages/SearchResult";
 import UploadComic from "@/pages/UploadComic";
 
 import {
+  bookmarksUrl,
   chapterUrl,
   comicListUrl,
   comicUrl,
@@ -21,15 +24,19 @@ import {
   loginUrl,
   registerUrl,
   resetPasswordUrl,
+  searchResultUrl,
   updatePasswordUrl,
   uploadComicUrl,
   uploadUrl,
 } from "./urlStructure";
 
 const publicRoutes = [
+  // View pages
   { path: homeUrl(), component: Home, layout: PageComicsLayout },
   { path: comicUrl(), component: Comic },
   { path: comicListUrl(), component: ComicList },
+  { path: bookmarksUrl(), component: MyBookmark },
+  { path: searchResultUrl(), component: SearchResult },
   {
     path: chapterUrl(),
     component: Chapter,

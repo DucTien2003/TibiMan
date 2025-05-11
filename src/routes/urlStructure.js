@@ -2,7 +2,10 @@
 const homeUrl = () => "/";
 const uploadUrl = () => "/upload";
 const comicListUrl = () => "/comic-list";
+const bookmarksUrl = () => "/bookmarks";
 const uploadComicUrl = () => "/upload/comic";
+const searchResultUrl = (search = "") =>
+  `/search-comic${search ? `?search=${search}` : ""}`;
 const detailComicUrl = (comicId = ":comicId") => `/upload/comic/${comicId}`;
 const comicUrl = (comicId = ":comicId") => `/${comicId}`;
 const chapterUrl = (comicId = ":comicId", chapterId = ":chapterId") =>
@@ -16,6 +19,7 @@ const updatePasswordUrl = () => "/update-password";
 const forgotPasswordUrl = () => "/forgot-password";
 
 export {
+  bookmarksUrl,
   chapterUrl,
   comicListUrl,
   comicUrl,
@@ -25,6 +29,7 @@ export {
   loginUrl,
   registerUrl,
   resetPasswordUrl,
+  searchResultUrl,
   updatePasswordUrl,
   uploadComicUrl,
   uploadUrl,

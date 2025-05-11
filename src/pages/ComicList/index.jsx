@@ -1,101 +1,99 @@
-import { useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { comicsApi } from "@/api";
+import BackTitle from "@/components/common/buttons/BackTitle";
 import DetailCard from "@/components/common/cards/DetailCard";
-import GenresSelector from "@/components/specific/GenresSelector";
+import FilterForm from "@/components/specific/FilterForm";
 import PaginationComponent from "@/components/specific/PaginationComponent";
 import { useGetData } from "@/hooks";
-import { homeUrl } from "@/routes";
-import { FaArrowLeft } from "@/utils";
+import { getUrlParams } from "@/utils";
 
 const NUMBER_OF_COMICS_PER_PAGE = 18;
 
 function ComicList() {
-  // States
-  const [currentPage, setCurrentPage] = useState(1);
-
   // Hooks
   const [params, setSearchParams] = useSearchParams();
 
   // variables
-  const orderBy = params.get("orderBy") || "orderBy";
-  const page = params.get("page") || 1;
+  const { page, order, status, genres, orderBy } = getUrlParams(params);
+
+  // States
+  const [currentPage, setCurrentPage] = useState(Number(page));
 
   // Functions
   const handlePageChange = (event, value) => {
-    setSearchParams({
-      page: value,
-      orderBy,
+    // Cập nhật page
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("page", value);
+      return newParams;
     });
     setCurrentPage(value);
   };
 
   //  Hooks
-  const staticApis = useMemo(
-    () => [
+  const staticApis = useMemo(() => {
+    return [
       {
         url: comicsApi(),
         query: {
           page,
-          limit: NUMBER_OF_COMICS_PER_PAGE,
+          status,
           orderBy,
-          sortType: "DESC",
+          order: order,
+          genres: genres,
+          limit: NUMBER_OF_COMICS_PER_PAGE,
         },
       },
-    ],
-    [page, orderBy]
-  );
+    ];
+  }, [page, orderBy, order, status, genres]);
 
   const { loading, error, responseData } = useGetData(staticApis);
   const [comics] = responseData || [];
 
-  if (loading || error) {
-    return (
-      <h2 className="mt-16 w-full text-center">{error || "Loading..."}</h2>
-    );
-  }
+  useEffect(() => {
+    // Cập nhật lại page khi có sự thay đổi từ params
+    setCurrentPage(Number(page));
+  }, [page]);
 
   return (
     <div className="my-20">
       <div className="container">
         {/* Back */}
-        <Link
-          to={homeUrl()}
-          className="hover-theme-primary-text inline-flex items-center rounded-lg border px-4 py-2 font-semibold">
-          <FaArrowLeft />
-          <h5 className="ml-2">Back to Home</h5>
-        </Link>
+        <BackTitle title="Danh sách truyện" />
 
         {/* Filter */}
-        <div className="mt-6 flex flex-col justify-between gap-2 md:mt-10 md:flex-row md:items-center">
-          <h1 className="theme-primary-text">Comic list</h1>
-          <div className="w-[400px] max-w-full">
-            <GenresSelector id="filter" label="Filter" />
+        <FilterForm />
+
+        {/* Loading/Error */}
+        {loading || error ? (
+          <div className="text-center">
+            <h2>{error || "Loading..."}</h2>
           </div>
-        </div>
+        ) : (
+          <>
+            {/* Display */}
+            <div className="grid grid-cols-2 gap-3 pb-12 md:grid-cols-4 md:gap-5 lg:grid-cols-6">
+              {comics.comics.map((comic, index) => (
+                <div key={index}>
+                  <DetailCard comic={comic} />
+                </div>
+              ))}
+            </div>
 
-        {/* Display */}
-        <div className="mt-10 grid grid-cols-2 gap-3 pb-12 md:grid-cols-4 md:gap-5 lg:grid-cols-6">
-          {comics.comics.map((comic, index) => {
-            return (
-              <div key={index}>
-                <DetailCard comic={comic} />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Pagination */}
-        <div className="flex w-full justify-center">
-          <PaginationComponent
-            size="large"
-            currentPage={currentPage}
-            itemPerPage={NUMBER_OF_COMICS_PER_PAGE}
-            count={comics.count}
-            handlePageChange={handlePageChange}
-          />
-        </div>
+            {/* Pagination */}
+            <div className="flex w-full justify-center">
+              <PaginationComponent
+                size="large"
+                currentPage={currentPage}
+                itemPerPage={NUMBER_OF_COMICS_PER_PAGE}
+                count={comics.count}
+                handlePageChange={handlePageChange}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

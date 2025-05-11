@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+
 import { hexToRgb } from "@/utils";
 
 // Light mode theme
@@ -152,4 +153,4 @@ const ThemeVariables = ({ theme }) => {
   return <style>{`:root { ${cssVariables} }`}</style>;
 };
 
-export { lightTheme, darkTheme, ThemeVariables };
+export { darkTheme, lightTheme, ThemeVariables };

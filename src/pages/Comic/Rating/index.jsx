@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import { useState } from "react";
 
+import { comicsIdRatingApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
 import DefaultButton from "@/components/common/buttons/DefaultButton";
-import { comicsIdRatingApi } from "@/api";
-import { FaRegStar } from "@/utils";
 import { useDropdown } from "@/hooks";
+import { FaRegStar } from "@/utils";
 
 const rateList = [
   { value: 10, title: "Masterpiece" },

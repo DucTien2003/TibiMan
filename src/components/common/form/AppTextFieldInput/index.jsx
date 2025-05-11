@@ -1,19 +1,25 @@
+import TextField from "@mui/material/TextField";
 import clsx from "clsx";
-import { useFormContext, Controller } from "react-hook-form";
 import { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+
+import { IoIosEye, IoIosEyeOff } from "@/utils";
 
 import styles from "./input.module.scss";
-import { IoIosEye, IoIosEyeOff } from "@/utils";
 
 function AppInput({
   id,
   name,
-  type,
   label,
-  placeholder,
+  rows = 1,
+  type = "text",
   validator = [],
-  required = true,
+  size = "normal",
+  required = false,
+  multiline = false,
   defaultValue = "",
+  variant = "outlined",
+  ...rest
 }) {
   const {
     control,
@@ -34,20 +40,15 @@ function AppInput({
   }
 
   return (
-    <div className="flex flex-col">
-      <div>
-        <label htmlFor={id}>
-          <span>{label}</span>
-          {required && <span className="ml-1 text-red-500">*</span>}
-        </label>
-      </div>
+    <div className="flex w-full flex-col">
       <span className="relative">
         <Controller
+          id={id}
           name={id}
           control={control}
           defaultValue={defaultValue}
           rules={{
-            required: required ? "This field is required" : false,
+            required: required ? "Trường này là bắt buộc" : false,
             validate: (value) => {
               for (let i = 0; i < validator.length; i++) {
                 const error = validator[i](value, name);
@@ -61,16 +62,25 @@ function AppInput({
           render={({ field }) => (
             <>
               {/* Input */}
-              <input
+              <TextField
+                id={id}
+                size={size}
+                variant={variant}
+                multiline={multiline}
+                rows={multiline ? rows : 1}
+                label={label + (required ? "*" : "")}
+                type={showPassword ? "text" : type}
                 className={clsx(
                   { [styles["error-input"]]: errors[id] },
                   styles["input"],
                   "w-full rounded-lg text-black"
                 )}
-                type={showPassword ? "text" : type}
-                placeholder={placeholder}
-                id={id}
+                error={!!errors[id]}
+                helperText={errors[id] && errors[id].message}
+                {...rest}
                 {...field}
+                // name={name}
+                // helperText={errors[id] && errors[id].message}
               />
 
               {/* Show/Hide password */}
@@ -85,16 +95,6 @@ function AppInput({
           )}
         />
       </span>
-
-      {/* Error message */}
-      <div
-        className={clsx(
-          { invisible: !errors[id] },
-          styles["error-message"],
-          "mt-1 min-h-6"
-        )}>
-        {errors[id] && <span>{errors[id].message}</span>}
-      </div>
     </div>
   );
 }

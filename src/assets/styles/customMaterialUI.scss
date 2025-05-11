@@ -29,11 +29,11 @@
 
 #status-selector,
 #chapter-selector {
+  padding: 8px 14px;
+
   @media screen and (min-width: 768px) {
     padding: 11.5px 14px;
   }
-
-  padding: 8px 14px;
 
   a,
   span {
@@ -48,7 +48,7 @@
   }
 
   .MuiInputBase-root {
-    padding: 8px !important;
+    padding: 6px !important;
   }
 }
 

@@ -1,17 +1,15 @@
 import Divider from "@mui/material/Divider";
 import { useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import ComicInfo from "./ComicInfo";
-import ChaptersInfo from "./ChaptersInfo";
-import AppIconButton from "@/components/common/buttons/AppIconButton";
-
-import { useGetData } from "@/hooks";
-import { FaAngleLeft } from "@/utils";
 import { comicsIdApi } from "@/api";
+import BackTitle from "@/components/common/buttons/BackTitle";
+import { useGetData } from "@/hooks";
+
+import ChaptersInfo from "./ChaptersInfo";
+import ComicInfo from "./ComicInfo";
 
 function UploadComic() {
-  const navigate = useNavigate();
   const { comicId } = useParams();
 
   const staticApis = useMemo(
@@ -20,7 +18,7 @@ function UploadComic() {
         ? [
             {
               url: comicsIdApi(comicId),
-              query: { orderBy: "created_at", sortType: "ASC" },
+              query: { orderBy: "created_at", order: "ASC" },
             },
           ]
         : [],
@@ -28,10 +26,6 @@ function UploadComic() {
   );
 
   const staticResponse = useGetData(staticApis);
-
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   if (staticResponse.loading) {
     return <h2 className="mt-16 w-full text-center">Loading...</h2>;
@@ -42,15 +36,8 @@ function UploadComic() {
     : [{}, []];
 
   return (
-    <div className="container mb-96 mt-20">
-      <div className="mb-3 flex items-center">
-        <AppIconButton color="black" onClick={handleBack}>
-          <span>
-            <FaAngleLeft className="text-lg" />
-          </span>
-        </AppIconButton>
-        <h3 className="font-medium">Chi tiết truyện</h3>
-      </div>
+    <div className="container mb-20 mt-20 min-h-screen">
+      <BackTitle className="mb-3" title="Chi tiết truyện" />
 
       {/* Comic info */}
       <ComicInfo comicId={comicId} comicInfo={comicInfo} />

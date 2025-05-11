@@ -33,7 +33,7 @@ function Chapter() {
       { url: comicsIdApi(comicId) },
       {
         url: comicsIdChaptersApi(comicId),
-        query: { orderby: "number_order", sortType: "DESC" },
+        query: { orderby: "number_order", order: "DESC" },
       },
     ],
     [comicId]

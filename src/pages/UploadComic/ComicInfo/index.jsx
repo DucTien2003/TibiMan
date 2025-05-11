@@ -1,43 +1,47 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
+import { comicsApi, comicsIdApi } from "@/api";
 import axiosRequest from "@/api/axiosRequest";
-import UploadBox from "@/components/specific/UploadBox";
-import SelectInput from "@/components/common/SelectInput";
+import DefaultButton from "@/components/common/buttons/DefaultButton";
+import AppSelectInput from "@/components/common/form/AppSelectInput";
+import AppTextFieldInput from "@/components/common/form/AppTextFieldInput";
 import ModalComponent from "@/components/common/ModalComponent";
 import GenresSelector from "@/components/specific/GenresSelector";
-import DefaultButton from "@/components/common/buttons/DefaultButton";
-import AppTextFieldInput from "@/components/common/AppTextFieldInput";
-import { comicsApi, comicsIdApi } from "@/api";
-import { useAlertStore, alertActions } from "@/store";
-import { useForm, FormProvider } from "react-hook-form";
-import {
-  requiredAcceptSpace,
-  convertImageToFile,
-  capitalizeFirstLetter,
-} from "@/utils";
-
-const statusList = [
-  { value: "ongoing", title: "Ongoing" },
-  { value: "dropped", title: "Dropped" },
-  { value: "completed", title: "Completed" },
-];
+import UploadBox from "@/components/specific/UploadBox";
+import { alertActions, useAlertStore } from "@/store";
+import { convertImageToFile, requiredAcceptSpace, statusList } from "@/utils";
 
 function ComicInfo({ comicId, comicInfo = {} }) {
+  // Variables
+  const initGenres = comicInfo.genres
+    ? comicInfo.genres.map((genre) => genre.id)
+    : [];
+
+  // States
+  const [genres, setGenres] = useState(initGenres);
+
+  // Hooks
   const navigate = useNavigate();
   const [, alertDispatch] = useAlertStore();
 
   // Refs
+  const coverRef = useRef();
   const resetModalRef = useRef();
   const updateModalRef = useRef();
 
-  const coverRef = useRef();
-  const statusSelectorRef = useRef();
-  const genresSelectorRef = useRef();
-
   // For form
-  const [formControllerData, setFormControllerData] = useState(comicInfo);
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      name: comicInfo.name || "",
+      author: comicInfo.author || "",
+      translator: comicInfo.translator || "",
+      subname: comicInfo.subname || "",
+      description: comicInfo.description || "",
+      status: comicInfo.status || statusList[0].value,
+    },
+  });
   // const { setError } = methods;
 
   const [initialFiles, setCoverFile] = useState([]);
@@ -56,11 +60,10 @@ function ComicInfo({ comicId, comicInfo = {} }) {
   const handleReset = () => {
     methods.reset();
     coverRef.current.resetFiles();
-    statusSelectorRef.current.resetValue();
-    genresSelectorRef.current.resetValue();
+    setGenres(initGenres);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     // Check if cover is empty
     const isEmptyCover = coverRef.current.checkEmpty();
 
@@ -69,18 +72,15 @@ function ComicInfo({ comicId, comicInfo = {} }) {
     }
 
     // Open modal
-    setFormControllerData(data);
     updateModalRef.current.openModal();
   };
 
   const handleConfirm = async () => {
     const cover = coverRef.current.getFiles();
-    const status = statusSelectorRef.current.getValue();
-    const genres = genresSelectorRef.current.getValue();
+    const data = methods.getValues();
 
     const newComicInfo = {
-      ...formControllerData,
-      status,
+      ...data,
       genres,
     };
 
@@ -189,37 +189,25 @@ function ComicInfo({ comicId, comicInfo = {} }) {
                     name="Dịch giả"
                     label="Dịch giả"
                     size="small"
-                    defaultValue={comicInfo.translator || ""}
+                    // defaultValue={comicInfo.translator || ""}
                   />
                 </div>
                 {/* Sub name */}
-                <div>
-                  <AppTextFieldInput
-                    id="subname"
-                    name="Tên phụ"
-                    label="Tên phụ"
-                    size="small"
-                    defaultValue={comicInfo.subname || ""}
-                  />
-                </div>
+                <AppTextFieldInput
+                  id="subname"
+                  name="Tên phụ"
+                  label="Tên phụ"
+                  size="small"
+                  // defaultValue={comicInfo.subname || ""}
+                />
                 {/* Status */}
-                <div>
-                  <SelectInput
-                    id="status-selector"
-                    label="Trạng thái"
-                    list={statusList}
-                    initialValue={
-                      comicInfo.status
-                        ? {
-                            value: comicInfo.status,
-                            title: capitalizeFirstLetter(comicInfo.status),
-                          }
-                        : statusList[0]
-                    }
-                    size="small"
-                    ref={statusSelectorRef}
-                  />
-                </div>
+                <AppSelectInput
+                  id="status"
+                  name="Trạng thái"
+                  label="Trạng thái"
+                  list={statusList}
+                  size="small"
+                />
               </div>
             </div>
           </div>
@@ -243,12 +231,9 @@ function ComicInfo({ comicId, comicInfo = {} }) {
               <GenresSelector
                 id="genres"
                 label="Thể loại"
-                initialData={
-                  comicInfo.genres
-                    ? comicInfo.genres.map((genre) => genre.id)
-                    : []
-                }
-                ref={genresSelectorRef}
+                genres={genres}
+                size="small"
+                setGenres={setGenres}
               />
             </div>
           </div>

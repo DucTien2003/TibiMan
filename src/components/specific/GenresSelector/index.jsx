@@ -1,47 +1,21 @@
 import { Autocomplete } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from "react";
+import { useMemo } from "react";
 
 import { genresApi } from "@/api";
 import { useGetData } from "@/hooks";
 
-function GenresSelector({ label, id, initialData = [] }, ref) {
-  const [selectedGenres, setSelectedGenres] = useState(initialData);
-
-  useImperativeHandle(ref, () => ({
-    getValue() {
-      return selectedGenres;
-    },
-
-    setValue(value) {
-      setSelectedGenres(value);
-    },
-
-    resetValue() {
-      setSelectedGenres(initialData);
-    },
-  }));
-
-  useEffect(() => {
-    console.log(selectedGenres);
-  }, [selectedGenres]);
-
+function GenresSelector({ label, id, genres, setGenres, size = "medium" }) {
   const handleChange = (newValue) => {
-    setSelectedGenres(newValue.map((option) => option.id));
+    setGenres(newValue.map((option) => option.id));
   };
 
   const staticApis = useMemo(
     () => [
       {
         url: genresApi(),
-        query: { orderBy: "name", sortType: "ASC" },
+        query: { orderBy: "name", order: "ASC" },
       },
     ],
     []
@@ -53,17 +27,18 @@ function GenresSelector({ label, id, initialData = [] }, ref) {
     return <h2 className="mt-16 w-full text-center">Loading...</h2>;
   }
 
-  const [{ genres }] = staticResponse.responseData;
+  const [{ genres: genreArr }] = staticResponse.responseData;
 
   return (
     <div className="genres-selector">
       <Autocomplete
         multiple
+        size={size}
         id={`${id}-autocomplete`}
-        options={genres}
+        options={genreArr}
         getOptionLabel={(option) => option.name}
-        value={selectedGenres.map((genreId) =>
-          genres.find((genre) => genre.id === genreId)
+        value={genres.map((genreId) =>
+          genreArr.find((genre) => genre.id === genreId)
         )}
         onChange={(event, newValue) => handleChange(newValue)}
         renderInput={(params) => (
@@ -72,6 +47,7 @@ function GenresSelector({ label, id, initialData = [] }, ref) {
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
             <Chip
+              size={size}
               label={option.name}
               {...getTagProps({ index })}
               key={option.id}
@@ -88,4 +64,4 @@ function GenresSelector({ label, id, initialData = [] }, ref) {
   );
 }
 
-export default forwardRef(GenresSelector);
+export default GenresSelector;
